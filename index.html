@@ -143,11 +143,71 @@ a{text-decoration:none;color:inherit}
 .clear-btn{background:#DC262622;border:1px solid #DC262644;border-radius:4px;padding:3px 8px;color:var(--linux-a);font-size:9px;font-weight:600;flex-shrink:0}
 .clear-btn:hover{background:#DC262644}
 
+/* Schedule button on blocks */
+.sched-btn{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:5px;background:#7C3AED18;border:1px solid #7C3AED33;color:var(--qa-a);font-size:10px;font-weight:600;transition:all 0.15s;white-space:nowrap;flex-shrink:0}
+.sched-btn:hover{background:#7C3AED33;border-color:#7C3AED66}
+.sched-btn.added{background:#0F766E18;border-color:#0F766E33;color:var(--prog-a)}
+
+/* Schedule view */
+.sch-cols{display:flex;gap:16px;height:100%}
+.sch-col{flex:1;min-width:0;display:flex;flex-direction:column}
+.sch-col-hdr{padding:10px 14px;border-radius:8px 8px 0 0;display:flex;align-items:center;justify-content:space-between;background:#ffffff06}
+.sch-col-title{font-size:13px;font-weight:700}
+.sch-col-meta{font-size:10px;font-family:var(--mono);color:var(--text-muted)}
+.sch-col-body{flex:1;border:1px dashed #ffffff0f;border-top:none;border-radius:0 0 8px 8px;padding:8px;display:flex;flex-direction:column;gap:6px;min-height:100px;overflow:auto;transition:all 0.2s}
+.sch-col-body.dragover{border-color:#7C3AED44;background:#7C3AED08}
+.sch-drop-hint{text-align:center;padding:28px 10px;color:var(--text-faint);font-size:11px;font-style:italic}
+.sch-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:50px 20px;gap:12px}
+.sch-empty-icon{font-size:36px;opacity:0.3}
+.sch-empty-title{font-size:14px;font-weight:600;color:var(--text-muted)}
+.sch-empty-text{font-size:11px;color:var(--text-faint);text-align:center;max-width:360px;line-height:1.7}
+
+/* Schedule card */
+.sc{background:#12121c;border-radius:7px;overflow:hidden;border:1px solid #ffffff08;transition:all 0.15s}
+.sc:hover{border-color:#ffffff14}
+.sc.dragging{opacity:0.3;border-style:dashed}
+.sc-hdr{padding:8px 12px;display:flex;align-items:center;justify-content:space-between;gap:6px;cursor:grab}
+.sc-hdr:active{cursor:grabbing}
+.sc-left{display:flex;align-items:center;gap:8px;min-width:0;flex:1}
+.sc-title{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-info{font-size:9px;font-weight:500}
+.sc-wk{font-size:9px;color:var(--text-faint);font-family:var(--mono)}
+.sc-actions{display:flex;align-items:center;gap:1px;flex-shrink:0}
+.sc-act{width:24px;height:24px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--text-muted);transition:all 0.1s}
+.sc-act:hover{background:#ffffff0a;color:#fff}
+.sc-act.del:hover{background:#DC262622;color:var(--linux-a)}
+.sc-pct{font-size:9px;font-family:var(--mono);padding:2px 6px;border-radius:3px;margin-right:2px}
+.sc-body{border-top:1px solid #ffffff08;padding:6px 8px}
+.sc-topic{display:flex;align-items:flex-start;gap:8px;padding:5px 6px;border-radius:4px;font-size:11px;color:#bbb;line-height:1.5}
+.sc-topic:hover{background:#ffffff04}
+.sc-res{border-top:1px solid #ffffff06}
+.sc-res-tog{width:100%;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;font-size:10px;color:#666}
+.sc-res-tog:hover{color:#999}
+.sc-res-list{padding:2px 10px 8px;display:flex;flex-direction:column;gap:2px}
+.sc-res-lnk{display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:4px;font-size:10px;color:#888;transition:all 0.1s}
+.sc-res-lnk:hover{background:#ffffff06;color:#ccc}
+/* Schedule time gutter */
+.sch-gutter{width:64px;flex-shrink:0;display:flex;flex-direction:column}
+.sch-gutter-hdr{height:42px;flex-shrink:0}
+.sch-gutter-body{flex:1;padding-top:8px}
+.sch-hour{height:60px;font-size:10px;font-family:var(--mono);color:var(--text-faint);text-align:right;padding-right:10px;border-top:1px solid #ffffff06;line-height:1;padding-top:4px}
+.sc-time-wrap{position:relative}
+.sc-time{font-size:10px;font-family:var(--mono);color:var(--qa-a);padding:3px 8px;font-weight:500;letter-spacing:0.02em}
+.sch-end-time{font-size:10px;font-family:var(--mono);color:var(--prog-a);padding:8px;text-align:center;font-weight:600}
+.sch-toolbar{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.sch-sum{font-size:11px;color:var(--text-muted);font-family:var(--mono)}
+.sch-clear{padding:4px 10px;border-radius:4px;background:#DC262618;border:1px solid #DC262633;color:var(--linux-a);font-size:9px;font-weight:600;margin-left:auto}
+.sch-clear:hover{background:#DC262633}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:#1a1a2e;border:1px solid #ffffff18;border-radius:8px;padding:10px 18px;font-size:12px;color:#fff;opacity:0;transition:all 0.3s;pointer-events:none;z-index:99;box-shadow:0 8px 30px #00000066}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
 @media(max-width:600px){
   .hdr{padding:8px 12px}
   .content{padding:12px}
   .week-card{padding:10px 12px}
   .res-url{max-width:200px}
+  .sch-cols{flex-direction:column;gap:12px}
+  .sch-gutter{display:none}
 }
 </style>
 </head>
@@ -171,12 +231,14 @@ a{text-decoration:none;color:inherit}
   <!-- Tabs -->
   <div class="tabs">
     <button class="tab active" data-view="semester">Semester</button>
+    <button class="tab" data-view="schedule">📅 Schedule <span id="schedCount" style="font-size:9px;font-family:var(--mono);opacity:0.7"></span></button>
     <button class="tab" data-view="pomodoro">Pomodoro</button>
   </div>
 
   <!-- Content -->
   <div class="content" id="content"></div>
 </div>
+<div class="toast" id="toast"></div>
 
 <script>
 // ══════════════════════════════════════════════════════════
@@ -267,6 +329,7 @@ const POM_PRESETS=[{label:"Classic",work:25,short:5,long:15},{label:"Deep Focus"
 // ══════════════════════════════════════════════════════════
 
 const LS_KEY = "semester_planner_v2";
+const SCHED_KEY = "semester_schedule";
 
 function loadState() {
   try {
@@ -279,6 +342,29 @@ function saveState() {
   try {
     localStorage.setItem(LS_KEY, JSON.stringify({ completed: state.completed, expandedRes: state.expandedRes, pomCount: state.pomCount }));
   } catch(e) {}
+}
+
+function loadSchedule() {
+  try { const r = localStorage.getItem(SCHED_KEY); return r ? JSON.parse(r) : []; } catch(e) { return []; }
+}
+function saveSchedule(items) {
+  try { localStorage.setItem(SCHED_KEY, JSON.stringify(items)); } catch(e) {}
+}
+function isScheduled(wi, day, bi) {
+  return loadSchedule().some(it => it.wi===wi && it.day===day && it.bi===bi);
+}
+function toggleSchedule(wi, day, bi) {
+  let items = loadSchedule();
+  const idx = items.findIndex(it => it.wi===wi && it.day===day && it.bi===bi);
+  if (idx >= 0) { items.splice(idx, 1); }
+  else {
+    const w = WEEKS[wi];
+    const block = w[day][bi];
+    const s = S(block.subj);
+    items.push({ wi, day, bi, subj: block.subj, title: block.title, pom: block.pom, weekNum: w.week, theme: w.theme, weekDay: day, topics: block.topics, resources: block.resources || [] });
+  }
+  saveSchedule(items);
+  render();
 }
 function clearAll() {
   if (confirm("Clear ALL progress? This cannot be undone.")) {
@@ -304,6 +390,9 @@ const state = {
   pomRunning: false,
   pomCount: saved.pomCount || 0,
   pomInterval: null,
+  schExp: {},
+  schRes: {},
+  schDrag: null,
 };
 
 function toggleTopic(w, d, bi, ti) {
@@ -368,6 +457,163 @@ function pomReset(){clearInterval(state.pomInterval);state.pomRunning=false;stat
 function pomSetPreset(i){clearInterval(state.pomInterval);state.pomRunning=false;state.pomPreset=i;state.pomMode="work";state.pomTime=POM_PRESETS[i].work*60;render()}
 
 // ══════════════════════════════════════════════════════════
+// SCHEDULE HELPERS
+// ══════════════════════════════════════════════════════════
+
+function showToast(m){const t=$("toast");t.textContent=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2200)}
+function schRemove(i){const items=loadSchedule();const r=items.splice(i,1)[0];saveSchedule(items);delete state.schExp[i];delete state.schRes[i];showToast('Removed: '+r.title);render()}
+function schMove(i,dir){const items=loadSchedule();const n=i+dir;if(n<0||n>=items.length)return;[items[i],items[n]]=[items[n],items[i]];const oe=state.schExp[i],ne=state.schExp[n];state.schExp[i]=ne;state.schExp[n]=oe;saveSchedule(items);render()}
+function schAssign(i,day){const items=loadSchedule();items[i].schedDay=day;saveSchedule(items);showToast('Moved to '+(day==='sat'?'Saturday':'Sunday'));render()}
+function schTogExp(i){state.schExp[i]=!state.schExp[i];render()}
+function schTogRes(i){state.schRes[i]=!state.schRes[i];render()}
+function schClear(){if(!confirm('Remove all blocks from schedule?'))return;saveSchedule([]);state.schExp={};state.schRes={};showToast('Schedule cleared');render()}
+
+// Drag & Drop
+function schDs(e,i){state.schDrag=i;e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',String(i));requestAnimationFrame(()=>{document.querySelectorAll('.sc').forEach((c,ci)=>{if(ci===i)c.classList.add('dragging')})})}
+function schDe(){state.schDrag=null;document.querySelectorAll('.sc').forEach(c=>c.classList.remove('dragging'));document.querySelectorAll('.sch-col-body').forEach(c=>c.classList.remove('dragover'))}
+function schDov(e){e.preventDefault();e.dataTransfer.dropEffect='move'}
+function schDen(e){e.currentTarget.classList.add('dragover')}
+function schDlv(e){if(!e.currentTarget.contains(e.relatedTarget))e.currentTarget.classList.remove('dragover')}
+function schDrp(e,day){e.preventDefault();e.currentTarget.classList.remove('dragover');const i=parseInt(e.dataTransfer.getData('text/plain'));if(isNaN(i))return;schAssign(i,day)}
+
+function schCard(item,idx){
+  const s=S(item.subj); if(!s) return '';
+  const op=state.schExp[idx], ro=state.schRes[idx];
+  const td=item.topics?item.topics.filter((_,ti)=>state.completed[`${item.wi}-${item.day}-${item.bi}-${ti}`]).length:0;
+  const tt=item.topics?item.topics.length:0;
+  const pct=tt?Math.round(td/tt*100):0;
+  let h=`<div class="sc" draggable="true" ondragstart="schDs(event,${idx})" ondragend="schDe()">`;
+  h+=`<div class="sc-hdr" onclick="schTogExp(${idx})">`;
+  h+=`<div class="sc-left"><span style="font-size:13px;flex-shrink:0">${s.icon}</span><div style="min-width:0"><div class="sc-title">${item.title}</div>`;
+  h+=`<div style="display:flex;align-items:center;gap:6px;margin-top:2px"><span class="sc-info" style="color:${s.accent}">${s.name} · ${item.pom} pom</span>`;
+  h+=`<span class="sc-wk">W${item.weekNum} ${item.day==='sat'?'Sat':'Sun'}</span></div></div></div>`;
+  h+=`<div class="sc-actions" onclick="event.stopPropagation()">`;
+  if(pct>0)h+=`<span class="sc-pct" style="background:${pct===100?'#0F766E22':'#ffffff08'};color:${pct===100?'var(--prog-a)':'var(--text-faint)'}">${pct===100?'✓':pct+'%'}</span>`;
+  h+=`<button class="sc-act" title="Swap day" onclick="schAssign(${idx},'${((item.schedDay||'sat')==='sat')?'sun':'sat'}')" style="font-size:10px">⇄</button>`;
+  h+=`<button class="sc-act" title="Up" onclick="schMove(${idx},-1)">↑</button>`;
+  h+=`<button class="sc-act" title="Down" onclick="schMove(${idx},1)">↓</button>`;
+  h+=`<button class="sc-act del" title="Remove" onclick="schRemove(${idx})">✕</button>`;
+  h+=`</div></div>`;
+
+  if(op && item.topics){
+    h+=`<div class="sc-body">`;
+    item.topics.forEach((t,ti)=>{
+      const k=`${item.wi}-${item.day}-${item.bi}-${ti}`;
+      const d=state.completed[k];
+      h+=`<div class="sc-topic"><div class="chk ${d?'checked':''}" style="${d?'background:'+s.bg:''}" onclick="event.stopPropagation();toggleTopic(${item.wi},'${item.day}',${item.bi},${ti})">`;
+      if(d)h+=`<svg width="8" height="8" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      h+=`</div><span class="${d?'topic-text checked':''}">${t}</span></div>`;
+    });
+    h+=`</div>`;
+    if(item.resources && item.resources.length>0){
+      h+=`<div class="sc-res"><button class="sc-res-tog" onclick="event.stopPropagation();schTogRes(${idx})">📚 ${item.resources.length} resources <span style="transform:rotate(${ro?180:0}deg);display:inline-block;transition:transform 0.2s">▼</span></button>`;
+      if(ro){
+        h+=`<div class="sc-res-list">`;
+        item.resources.forEach(r=>{
+          h+=`<a class="sc-res-lnk" href="${r.url}" target="_blank" rel="noopener noreferrer"><span>${r.type}</span><span>${r.name}</span></a>`;
+        });
+        h+=`</div>`;
+      }
+      h+=`</div>`;
+    }
+  }
+  h+=`</div>`;
+  return h;
+}
+
+function pomMinutes(){ return POM_PRESETS[state.pomPreset].work + POM_PRESETS[state.pomPreset].short; }
+function timeLabel(startMin){
+  const h=Math.floor(startMin/60);
+  const m=startMin%60;
+  const ampm=h>=12?'PM':'AM';
+  const h12=h>12?h-12:(h===0?12:h);
+  return `${h12}:${String(m).padStart(2,'0')} ${ampm}`;
+}
+
+function buildTimeBlocks(items){
+  const pm=pomMinutes();
+  let t=540; // 9:00 AM in minutes
+  return items.map(it=>{
+    const start=t;
+    const dur=it.pom*pm;
+    t+=dur;
+    return {...it, startMin:start, endMin:t, startLabel:timeLabel(start), endLabel:timeLabel(t)};
+  });
+}
+
+function renderSchedule(){
+  const items=loadSchedule();
+  const tp=items.reduce((s,it)=>s+it.pom,0);
+  const pm=pomMinutes();
+  let html='';
+
+  if(items.length===0){
+    html=`<div class="sch-empty">
+      <div class="sch-empty-icon">📅</div>
+      <div class="sch-empty-title">No blocks scheduled yet</div>
+      <div class="sch-empty-text">Go to the <strong style="color:var(--qa-a);cursor:pointer" onclick="state.view='semester';state.selectedWeek=0;state.selectedDay='sat';render()">Semester</strong> tab, open any week, and click <span style="color:var(--qa-a);font-weight:600">→ Schedule</span> on study blocks to add them here.<br><br>Drag blocks between Saturday & Sunday to plan your weekend.</div>
+    </div>`;
+    content().innerHTML=html;
+    return;
+  }
+
+  const satRaw=[],sunRaw=[];
+  items.forEach((it,i)=>{const o={...it,_i:i};(it.schedDay==='sun'?sunRaw:satRaw).push(o)});
+  const sat=buildTimeBlocks(satRaw);
+  const sun=buildTimeBlocks(sunRaw);
+  const sp=sat.reduce((s,it)=>s+it.pom,0);
+  const up=sun.reduce((s,it)=>s+it.pom,0);
+
+  // Time gutter hours
+  const hours=[];
+  for(let h=9;h<=19;h++) hours.push(h); // 9 AM to 7 PM
+
+  html+=`<div class="sch-toolbar">
+    <span class="sch-sum">${items.length} blocks · ${tp} pomodoros · ${pm}min/pom (${POM_PRESETS[state.pomPreset].label})</span>
+    <button class="sch-clear" onclick="schClear()">Clear All</button>
+  </div>`;
+
+  html+=`<div class="sch-cols">
+    <!-- Time gutter -->
+    <div class="sch-gutter">
+      <div class="sch-gutter-hdr"></div>
+      <div class="sch-gutter-body">
+        ${hours.map(h=>{
+          const ampm=h>=12?'PM':'AM';
+          const h12=h>12?h-12:(h===0?12:h);
+          return `<div class="sch-hour">${h12}:00 ${ampm}</div>`;
+        }).join('')}
+      </div>
+    </div>
+    <!-- Saturday -->
+    <div class="sch-col">
+      <div class="sch-col-hdr"><span class="sch-col-title">☀️ Saturday</span><span class="sch-col-meta">${sat.length} blocks · ${sp} pom</span></div>
+      <div class="sch-col-body" ondragover="schDov(event)" ondragenter="schDen(event)" ondragleave="schDlv(event)" ondrop="schDrp(event,'sat')">
+        ${sat.length===0?`<div class="sch-drop-hint">Drag blocks here</div>`:''}
+        ${sat.map(it=>{
+          const dur=it.pom*pm;
+          return `<div class="sc-time-wrap"><div class="sc-time">${it.startLabel} – ${it.endLabel}</div>${schCard(it,it._i)}</div>`;
+        }).join('')}
+        ${sat.length>0?`<div class="sch-end-time">${sat[sat.length-1].endLabel} — Done ✓</div>`:''}
+      </div>
+    </div>
+    <!-- Sunday -->
+    <div class="sch-col">
+      <div class="sch-col-hdr"><span class="sch-col-title">🌙 Sunday</span><span class="sch-col-meta">${sun.length} blocks · ${up} pom</span></div>
+      <div class="sch-col-body" ondragover="schDov(event)" ondragenter="schDen(event)" ondragleave="schDlv(event)" ondrop="schDrp(event,'sun')">
+        ${sun.length===0?`<div class="sch-drop-hint">Drag blocks here</div>`:''}
+        ${sun.map(it=>{
+          const dur=it.pom*pm;
+          return `<div class="sc-time-wrap"><div class="sc-time">${it.startLabel} – ${it.endLabel}</div>${schCard(it,it._i)}</div>`;
+        }).join('')}
+        ${sun.length>0?`<div class="sch-end-time">${sun[sun.length-1].endLabel} — Done ✓</div>`:''}
+      </div>
+    </div>
+  </div>`;
+  content().innerHTML=html;
+}
+
+// ══════════════════════════════════════════════════════════
 // RENDER
 // ══════════════════════════════════════════════════════════
 
@@ -378,10 +624,13 @@ function render() {
   const tp = getTotalProgress();
   $("totalPct").textContent = tp+"%";
   $("totalBar").style.width = tp+"%";
+  const sc = loadSchedule().length;
+  $("schedCount").textContent = sc > 0 ? `(${sc})` : "";
 
   document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.view === state.view));
 
   if (state.view === "pomodoro") renderPomodoro();
+  else if (state.view === "schedule") renderSchedule();
   else if (state.selectedWeek !== null) renderWeekDetail();
   else renderSemester();
 }
@@ -481,7 +730,12 @@ function renderWeekDetail() {
             <div class="block-subj" style="color:${s.accent}">${s.name} · ${block.pom} pom · ${res.length} sources</div>
           </div>
         </div>
-        ${blockDone?`<span class="block-done">DONE</span>`:""}
+        <div style="display:flex;align-items:center;gap:6px">
+          ${blockDone?`<span class="block-done">DONE</span>`:""}
+          <button class="sched-btn ${isScheduled(wi,state.selectedDay,bi)?"added":""}" onclick="event.stopPropagation();toggleSchedule(${wi},'${state.selectedDay}',${bi})">
+            ${isScheduled(wi,state.selectedDay,bi)?`✓ Scheduled`:`→ Schedule`}
+          </button>
+        </div>
       </div>
       <div class="topics">`;
 
@@ -533,7 +787,7 @@ function renderWeekDetail() {
 // ══════════════════════════════════════════════════════════
 
 document.querySelectorAll(".tab").forEach(t => {
-  t.addEventListener("click", () => { state.view = t.dataset.view; if(t.dataset.view!=="semester") state.selectedWeek=null; render(); });
+  t.addEventListener("click", () => { state.view = t.dataset.view; if(t.dataset.view==="semester"){ /* keep selectedWeek */ } else { state.selectedWeek=null; } render(); });
 });
 
 render();
