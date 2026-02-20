@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semester 1 — Zero to Hero | 20-Week Study Planner</title>
+<meta name="description" content="20-week intensive study planner: Programming, QA Engineering, Godot, Linux, English">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#08080D">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  color-scheme: dark;
+  --bg:#08080D;--surface:#ffffff03;--border:#ffffff08;--border-h:#ffffff14;
+  --text:#E4E2DF;--text-dim:#94A3B8;--text-muted:#666;--text-faint:#555;
+  --prog:#0F766E;--prog-a:#5EEAD4;--qa:#7C3AED;--qa-a:#C4B5FD;
+  --godot:#2563EB;--godot-a:#93C5FD;--linux:#DC2626;--linux-a:#FCA5A5;
+  --eng:#D97706;--eng-a:#FDE68A;
+  --font:'IBM Plex Sans','Segoe UI',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  accent-color:#C4B5FD;
+}
+html{background:#08080D}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font);background:var(--bg);color:var(--text)}
+button{font-family:var(--font);cursor:pointer;color:inherit;background:none;border:none}
+a{text-decoration:none;color:inherit}
+::selection{background:#7C3AED66;color:#fff}
+::-moz-selection{background:#7C3AED66;color:#fff}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#ffffff12;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#ffffff22}
+@supports(scrollbar-color:auto){*{scrollbar-color:#ffffff12 transparent;scrollbar-width:thin}}
+
+#app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+
+/* Header */
+.hdr{border-bottom:1px solid #ffffff0f;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;flex-wrap:wrap;gap:8px}
+.hdr-logo{width:32px;height:32px;border-radius:7px;background:linear-gradient(135deg,var(--prog),var(--qa),var(--linux));display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.hdr-title{font-size:13px;font-weight:600;letter-spacing:-0.02em}
+.hdr-sub{font-size:10px;color:var(--text-muted)}
+.hdr-bar{width:90px;height:4px;border-radius:2px;background:#ffffff0f;overflow:hidden}
+.hdr-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--prog),var(--qa),var(--linux));transition:width 0.4s}
+
+/* Tabs */
+.tabs{display:flex;border-bottom:1px solid #ffffff0f;flex-shrink:0;padding-left:16px;overflow-x:auto}
+.tab{background:none;border:none;color:var(--text-faint);font-size:11px;font-weight:500;padding:8px 14px;border-bottom:2px solid transparent;text-transform:uppercase;letter-spacing:0.08em}
+.tab.active{color:#fff;border-bottom-color:var(--qa-a)}
+
+/* Content */
+.content{flex:1;overflow:auto;padding:16px}
+
+/* Subject filters */
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.filter-btn{background:#ffffff04;border:1px solid #ffffff0a;border-radius:6px;padding:4px 10px;color:#888;font-size:10px;font-weight:500;display:flex;align-items:center;gap:5px;transition:all 0.15s}
+.filter-btn.active{background:color-mix(in srgb,var(--c) 20%,transparent);border-color:color-mix(in srgb,var(--c) 40%,transparent);color:var(--ca)}
+.filter-btn:hover{border-color:#ffffff18}
+
+/* Week cards */
+.week-list{display:flex;flex-direction:column;gap:6px;max-width:860px}
+.week-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;text-align:left;width:100%;transition:all 0.15s;display:flex;gap:12px;align-items:center}
+.week-card:hover{background:#ffffff06;border-color:var(--border-h)}
+.wk-num{width:30px;height:30px;border-radius:6px;background:#ffffff08;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:var(--mono);flex-shrink:0;color:#888}
+.wk-num.done{background:var(--prog);color:#fff}
+.wk-title{font-size:13px;font-weight:600}
+.wk-meta{font-size:9px;color:var(--text-faint);font-family:var(--mono);flex-shrink:0;margin-left:6px}
+.wk-tags{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap}
+.wk-tag{font-size:9px;padding:2px 6px;border-radius:3px;font-weight:500}
+.wk-bar{flex:1;height:2px;border-radius:1px;background:#ffffff08;overflow:hidden}
+.wk-bar-fill{height:100%;border-radius:1px;transition:width 0.3s}
+
+/* Week detail */
+.detail{max-width:700px}
+.back-btn{background:none;border:none;color:#777;font-size:11px;padding:0;margin-bottom:12px}
+.detail-title{font-size:18px;font-weight:700;letter-spacing:-0.02em}
+.detail-meta{font-size:11px;color:var(--text-muted);margin-top:2px;margin-bottom:14px}
+.day-toggle{display:flex;gap:4px;margin-bottom:16px}
+.day-btn{flex:1;padding:8px;border-radius:6px;background:transparent;border:1px solid var(--border);color:var(--text-muted);font-size:12px;font-weight:500}
+.day-btn.active{background:#ffffff0a;border-color:var(--border-h);color:#fff}
+
+/* Blocks */
+.blocks{display:flex;flex-direction:column;gap:10px}
+.block{background:var(--surface);border-radius:8px;overflow:hidden}
+.block-hdr{padding:10px 14px;border-bottom:1px solid #ffffff08;display:flex;justify-content:space-between;align-items:center}
+.block-icon{font-size:14px}
+.block-title{font-size:13px;font-weight:600}
+.block-subj{font-size:10px;font-weight:500}
+.block-done{font-size:9px;padding:2px 8px;border-radius:4px;background:#0F766E33;color:var(--prog-a);font-weight:600}
+
+/* Topics */
+.topics{padding:6px 8px}
+.topic-btn{display:flex;align-items:flex-start;gap:10px;padding:7px 8px;border-radius:5px;background:transparent;border:none;width:100%;text-align:left}
+.topic-btn:hover{background:#ffffff04}
+.chk{width:16px;height:16px;border-radius:3px;border:1.5px solid #ffffff18;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:all 0.15s}
+.chk.checked{border:none}
+.topic-text{font-size:12px;color:#bbb;line-height:1.5}
+.topic-text.checked{color:var(--text-faint);text-decoration:line-through}
+
+/* Resources */
+.res-toggle{width:100%;padding:8px 14px;background:none;border:none;border-top:1px solid #ffffff06;display:flex;align-items:center;justify-content:space-between}
+.res-toggle-text{font-size:11px;color:#888;font-weight:500}
+.res-arrow{font-size:10px;color:var(--text-faint);transition:transform 0.2s}
+.res-arrow.open{transform:rotate(180deg)}
+.res-list{padding:0 14px 10px;display:flex;flex-direction:column;gap:4px}
+.res-link{display:flex;align-items:flex-start;gap:8px;padding:6px 10px;border-radius:5px;background:#ffffff04;border:1px solid #ffffff08;transition:all 0.15s}
+.res-link:hover{background:#ffffff08;border-color:#ffffff18}
+.res-type{font-size:12px;flex-shrink:0;margin-top:1px}
+.res-name{font-size:11px;color:#ccc;font-weight:500;line-height:1.4}
+.res-url{font-size:9px;color:var(--text-muted);font-family:var(--mono);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:400px}
+
+/* Week nav */
+.week-nav{display:flex;justify-content:space-between;margin-top:20px;padding-top:12px;border-top:1px solid #ffffff08}
+.nav-btn{background:none;border:1px solid #ffffff0a;border-radius:6px;padding:6px 12px;color:#aaa;font-size:11px}
+.nav-btn:disabled{color:#333;cursor:default}
+.nav-btn.primary{background:var(--qa);border:none;color:#fff;font-weight:500}
+.nav-btn.primary:disabled{background:none;border:1px solid #ffffff0a}
+
+/* Pomodoro */
+.pom-wrap{max-width:380px;margin:0 auto;text-align:center;padding-top:12px}
+.pom-presets{display:flex;gap:6px;justify-content:center;margin-bottom:24px}
+.pom-preset{background:#ffffff04;border:1px solid #ffffff0a;border-radius:6px;padding:5px 12px;color:#777;font-size:11px}
+.pom-preset.active{background:#ffffff10;border-color:#ffffff18;color:#fff}
+.pom-preset small{display:block;font-size:9px;color:var(--text-faint);font-family:var(--mono);margin-top:1px}
+.pom-mode{font-size:10px;text-transform:uppercase;letter-spacing:0.12em;font-weight:600;margin-bottom:10px}
+.pom-circle{width:170px;height:170px;border-radius:50%;border:3px solid currentColor;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;transition:box-shadow 0.4s}
+.pom-circle.running{box-shadow:0 0 35px color-mix(in srgb,currentColor 20%,transparent)}
+.pom-time{font-family:var(--mono);font-size:40px;font-weight:700}
+.pom-session{font-size:9px;color:var(--text-faint);font-family:var(--mono);margin-top:2px}
+.pom-actions{display:flex;gap:8px;justify-content:center;margin-bottom:20px}
+.pom-start{border:none;border-radius:7px;padding:9px 24px;color:#fff;font-size:12px;font-weight:600}
+.pom-reset{background:#ffffff06;border:1px solid #ffffff0f;border-radius:7px;padding:9px 16px;color:#aaa;font-size:12px}
+.pom-dots{display:flex;gap:5px;justify-content:center}
+.pom-dot{width:8px;height:8px;border-radius:50%;background:#ffffff0f;transition:all 0.3s}
+.pom-dot.filled{background:var(--linux)}
+
+/* Storage banner */
+.storage-banner{background:#ffffff06;border:1px solid #ffffff0f;border-radius:6px;padding:8px 14px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.storage-text{font-size:10px;color:#888}
+.storage-text strong{color:#bbb}
+.clear-btn{background:#DC262622;border:1px solid #DC262644;border-radius:4px;padding:3px 8px;color:var(--linux-a);font-size:9px;font-weight:600;flex-shrink:0}
+.clear-btn:hover{background:#DC262644}
+
+@media(max-width:600px){
+  .hdr{padding:8px 12px}
+  .content{padding:12px}
+  .week-card{padding:10px 12px}
+  .res-url{max-width:200px}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- Header -->
+  <div class="hdr">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="hdr-logo">S1</div>
+      <div>
+        <div class="hdr-title">Semester 1 — Zero to Hero</div>
+        <div class="hdr-sub">20 weeks · 5 subjects · Weekends · Pomodoro · With Sources</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span id="totalPct" style="font-size:10px;color:#888;font-family:var(--mono)">0%</span>
+      <div class="hdr-bar"><div id="totalBar" class="hdr-bar-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" data-view="semester">Semester</button>
+    <button class="tab" data-view="pomodoro">Pomodoro</button>
+  </div>
+
+  <!-- Content -->
+  <div class="content" id="content"></div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════════════════
+
+const SUBJECTS = [
+  { key:"prog", name:"Programming", icon:"⌨️", bg:"#0F766E", accent:"#5EEAD4" },
+  { key:"qa", name:"QA Engineering", icon:"🧪", bg:"#7C3AED", accent:"#C4B5FD" },
+  { key:"godot", name:"Godot / Roguelike", icon:"🎮", bg:"#2563EB", accent:"#93C5FD" },
+  { key:"linux", name:"Linux", icon:"🐧", bg:"#DC2626", accent:"#FCA5A5" },
+  { key:"eng", name:"English", icon:"📖", bg:"#D97706", accent:"#FDE68A" },
+];
+const S = k => SUBJECTS.find(s=>s.key===k);
+
+const WEEKS=[
+{week:1,theme:"How Machines Think",sat:[
+{subj:"prog",pom:5,title:"Programming Foundations I",topics:["What is a program? Instructions, sequence, execution flow","Binary & hexadecimal: how data is stored (int, float, string, bool)","Variables as labeled containers: declaration, assignment, types","Operators: arithmetic, comparison (== vs =), logical (and, or, not)","Pseudocode: writing logic in plain language before coding"],resources:[{type:"📘",name:"Automate the Boring Stuff with Python (Ch. 1–2)",url:"https://automatetheboringstuff.com/2e/chapter1/"},{type:"🎬",name:"CS50 Lecture 0: Computational Thinking",url:"https://cs50.harvard.edu/x/2024/weeks/0/"},{type:"🌐",name:"Python Official Tutorial — Intro",url:"https://docs.python.org/3/tutorial/introduction.html"},{type:"🎮",name:"Replit — Online Python Sandbox",url:"https://replit.com/languages/python3"},{type:"🎬",name:"Fireship — Python in 100 Seconds",url:"https://www.youtube.com/watch?v=x7X9w_GIm1s"}]},
+{subj:"linux",pom:4,title:"Binary, Data & Logic Gates",topics:["Binary and hex number systems, conversions between bases","ASCII, UTF-8, Unicode encoding — how text becomes numbers","Boolean algebra: AND, OR, NOT, XOR, NAND truth tables","Logic gates as physical CPU building blocks","Use Logisim Evolution to build a 4-bit adder"],resources:[{type:"📘",name:"Code: The Hidden Language (Charles Petzold)",url:"https://www.amazon.com/Code-Language-Computer-Hardware-Software/dp/0137909101"},{type:"🎬",name:"Ben Eater — Building an 8-bit Computer",url:"https://www.youtube.com/playlist?list=PLowKtXNTBypGqImE405J2565dvjafglHU"},{type:"🎬",name:"Crash Course CS — Boolean Logic & Gates",url:"https://www.youtube.com/watch?v=gI-qXk7XojA"},{type:"🎮",name:"Logisim Evolution — Logic Gate Simulator",url:"https://github.com/logisim-evolution/logisim-evolution"},{type:"🌐",name:"ASCII Table Reference",url:"https://www.asciitable.com/"}]},
+{subj:"eng",pom:3,title:"A1 Foundation — Grammar Basics",topics:["Verb to be: am/is/are in present tense","Simple present tense: I work, she codes, they test","Subject-verb-object sentence structure","Basic IT vocab: computer, mouse, keyboard, screen, file, folder"],resources:[{type:"🌐",name:"BBC Learning English — Beginner Grammar",url:"https://www.bbc.co.uk/learningenglish/english/basic-grammar"},{type:"🎮",name:"Duolingo — Daily English Practice",url:"https://www.duolingo.com/"},{type:"🎮",name:"Anki Flashcards — IT Vocabulary Decks",url:"https://apps.ankiweb.net/"},{type:"🎬",name:"English with Lucy — Beginner Grammar",url:"https://www.youtube.com/@EnglishwithLucy"}]}
+],sun:[
+{subj:"prog",pom:5,title:"Programming Foundations II",topics:["Control flow: if / elif / else and nested conditions","Boolean logic truth tables: AND, OR, NOT combinations","While loops (condition-based) vs for loops (iteration-based)","Loop control: break, continue, avoiding infinite loops","Practice: FizzBuzz, number guessing game in Python"],resources:[{type:"📘",name:"Automate the Boring Stuff (Ch. 2 — Flow Control)",url:"https://automatetheboringstuff.com/2e/chapter2/"},{type:"🎬",name:"CS50 Lecture 1: C (conditionals, loops)",url:"https://cs50.harvard.edu/x/2024/weeks/1/"},{type:"🎮",name:"Exercism — Python Track",url:"https://exercism.org/tracks/python"},{type:"🌐",name:"Python Tutor — Visualize Execution",url:"https://pythontutor.com/"},{type:"🎮",name:"HackerRank — Python Practice",url:"https://www.hackerrank.com/domains/python"}]},
+{subj:"linux",pom:4,title:"CPU Architecture & Fetch-Execute",topics:["What a CPU is: ALU, control unit, registers, clock","The fetch-decode-execute cycle step by step","CISC (x86) vs RISC (ARM/RISC-V) philosophy","CPU cache hierarchy: L1, L2, L3 — latency matters","Hands-on: run lscpu, read /proc/cpuinfo on Linux"],resources:[{type:"📘",name:"But How Do It Know? (J. Clark Scott)",url:"https://www.amazon.com/But-How-Know-Principles-Computers/dp/0615303765"},{type:"🎬",name:"Ben Eater — How a CPU Works",url:"https://www.youtube.com/watch?v=cNN_tTXABUA"},{type:"🎮",name:"nand2tetris — Build a Computer",url:"https://www.nand2tetris.org/"},{type:"🎬",name:"Crash Course CS — CPU & Instructions",url:"https://www.youtube.com/watch?v=FZGugFqdr60"}]},
+{subj:"eng",pom:3,title:"A1 Foundation — IT Vocabulary",topics:["Numbers, dates, time, greetings, introductions","Simple instructions: click, open, close, restart, install, update","Question words: what, where, when, how, why","Practice: introduce yourself and describe your job in English"],resources:[{type:"📘",name:"Oxford English for IT",url:"https://www.amazon.com/English-Information-Technology-Learner-Student/dp/0194574938"},{type:"🌐",name:"Simple English Wikipedia",url:"https://simple.wikipedia.org/"},{type:"🎬",name:"BBC 6 Minute English",url:"https://www.bbc.co.uk/learningenglish/english/features/6-minute-english"},{type:"🎮",name:"Quizlet — IT English Flashcards",url:"https://quizlet.com/subject/english-for-it/"}]}
+]},
+{week:2,theme:"Data Structures & Memory",sat:[
+{subj:"prog",pom:5,title:"Data Structures & Functions",topics:["Arrays/Lists: ordered collections, zero-based indexing, slicing","Dictionaries/Maps: key-value pairs, when to use vs arrays","Functions: parameters, return values, scope","DRY principle — Don't Repeat Yourself, code reuse","String manipulation: concatenation, formatting, searching"],resources:[{type:"📘",name:"Automate the Boring Stuff (Ch. 3–5)",url:"https://automatetheboringstuff.com/2e/chapter3/"},{type:"🎬",name:"Corey Schafer — Python Lists, Tuples, Dicts",url:"https://www.youtube.com/watch?v=W8KRzm-HUcc"},{type:"🎮",name:"Exercism Python — Data Structures",url:"https://exercism.org/tracks/python/concepts"},{type:"🌐",name:"Python Docs — Data Structures",url:"https://docs.python.org/3/tutorial/datastructures.html"}]},
+{subj:"linux",pom:4,title:"Memory Hierarchy & Storage",topics:["Volatile vs non-volatile: RAM vs ROM vs Flash","Virtual memory: using more than physical RAM","Storage: HDD vs SSD vs NVMe, PCIe lanes, SATA","Memory hierarchy: registers > cache > RAM > SSD > HDD","Hands-on: free -h, lsblk, fdisk -l, lspci -v, htop"],resources:[{type:"📘",name:"Computer Organization & Design (Patterson)",url:"https://www.amazon.com/Computer-Organization-Design-RISC-V-Architecture/dp/0128203315"},{type:"🎬",name:"Computerphile — How Computer Memory Works",url:"https://www.youtube.com/watch?v=p3q5zWCw8J4"},{type:"🌐",name:"Linux man: proc(5) — /proc/meminfo",url:"https://man7.org/linux/man-pages/man5/proc.5.html"},{type:"🎬",name:"Crash Course CS — Memory & Storage",url:"https://www.youtube.com/watch?v=TQCr9RV7twk"}]},
+{subj:"eng",pom:3,title:"A1 — Articles & Prepositions",topics:["Articles: a, an, the — usage rules","Basic prepositions: in, on, at, to, from, with","There is / there are, have / has","Workplace vocab: meeting, office, team, project, deadline"],resources:[{type:"🌐",name:"Grammarly Blog — Articles",url:"https://www.grammarly.com/blog/articles/"},{type:"🎬",name:"English with Lucy — Prepositions",url:"https://www.youtube.com/watch?v=PBfGaHbzQHI"},{type:"🎮",name:"Cambridge English — Free Exercises",url:"https://www.cambridgeenglish.org/learning-english/"}]}
+],sun:[
+{subj:"prog",pom:4,title:"Functions & File Handling",topics:["Writing reusable functions: find_max, reverse_list, is_palindrome","Working with files: reading and writing data (txt, JSON, CSV)","Modules and imports in Python","Practice: contact book app with add/search/delete using dicts"],resources:[{type:"📘",name:"Automate the Boring Stuff (Ch. 9: Files)",url:"https://automatetheboringstuff.com/2e/chapter9/"},{type:"🌐",name:"Real Python — Reading/Writing Files",url:"https://realpython.com/read-write-files-python/"},{type:"🌐",name:"Python Docs — json module",url:"https://docs.python.org/3/library/json.html"},{type:"🎮",name:"Codewars — Python Kata",url:"https://www.codewars.com/?language=python"}]},
+{subj:"linux",pom:4,title:"Peripherals, Interrupts & Firmware",topics:["I/O devices and system interfaces","Interrupts: hardware vs software, IRQ lines, handlers","BIOS vs UEFI: power button to bootloader","POST sequence, device firmware, USB protocol basics","Hands-on: dmesg | head -100, cat /proc/interrupts"],resources:[{type:"🎬",name:"LiveOverflow — How Does a Computer Boot?",url:"https://www.youtube.com/watch?v=KkenLT8S9Hs"},{type:"🌐",name:"UEFI Specification Overview",url:"https://uefi.org/specifications"},{type:"🌐",name:"Linux Kernel Docs — Interrupts",url:"https://www.kernel.org/doc/html/latest/core-api/genericirq.html"},{type:"🎬",name:"Ben Eater — Interrupts",url:"https://www.youtube.com/watch?v=LnzuMJLZRdU"}]},
+{subj:"eng",pom:3,title:"A1 — Reading & Navigation",topics:["Read simple error messages and UI labels in English","Navigate an English OS and IDE menus","Write a basic self-introduction email","Practice: set phone/IDE to English"],resources:[{type:"🌐",name:"VS Code Interface Tour",url:"https://code.visualstudio.com/docs/getstarted/userinterface"},{type:"🌐",name:"MDN — HTTP Status Codes",url:"https://developer.mozilla.org/en-US/docs/Web/HTTP/Status"},{type:"🎬",name:"English for IT — Email Writing",url:"https://www.youtube.com/watch?v=PF1qMYlSnEQ"}]},
+{subj:"qa",pom:1,title:"QA Preview: What is Quality?",topics:["Difference between QA, QC, and Testing (overview)","Why QA matters in the age of AI-generated code"],resources:[{type:"📘",name:"ISTQB Foundation Syllabus (free PDF)",url:"https://www.istqb.org/certifications/certified-tester-foundation-level"},{type:"🎬",name:"The Testing Academy — QA vs QC vs Testing",url:"https://www.youtube.com/watch?v=pW0IUV2RFEM"}]}
+]},
+{week:3,theme:"OOP & Operating Systems",sat:[
+{subj:"prog",pom:5,title:"Object-Oriented Programming",topics:["What is OOP: modeling the world as objects","Classes & Objects: blueprints vs instances","Properties (attributes) and Methods (behaviors)","Constructors: __init__ in Python, _init() in GDScript","Inheritance: BaseEnemy > Goblin; BasePage > LoginPage"],resources:[{type:"🎬",name:"Corey Schafer — Python OOP (6 parts)",url:"https://www.youtube.com/watch?v=ZDa-Z5JzLYM&list=PL-osiE80TeTsqhIuOqKhwlXsIBIdSeYtc"},{type:"📘",name:"Real Python — OOP in Python 3",url:"https://realpython.com/python3-object-oriented-programming/"},{type:"📘",name:"Python Docs — Classes",url:"https://docs.python.org/3/tutorial/classes.html"},{type:"🎮",name:"Exercism — Python OOP",url:"https://exercism.org/tracks/python/concepts/classes"}]},
+{subj:"linux",pom:4,title:"What an OS Does & Unix Philosophy",topics:["Role of an OS: hardware abstraction, resource management","Kernel space vs user space, system calls","Process scheduling, memory management, device drivers","Unix Philosophy: do one thing well, composability","Hands-on: strace ls, chain 5+ commands with pipes"],resources:[{type:"📘",name:"OSTEP — Operating Systems: Three Easy Pieces (free)",url:"https://pages.cs.wisc.edu/~remzi/OSTEP/"},{type:"🎬",name:"MIT 6.828 — OS Engineering",url:"https://pdos.csail.mit.edu/6.828/2023/schedule.html"},{type:"📘",name:"The Art of Unix Programming (free)",url:"http://www.catb.org/esr/writings/taoup/html/"},{type:"🌐",name:"strace man page",url:"https://man7.org/linux/man-pages/man1/strace.1.html"}]},
+{subj:"eng",pom:3,title:"A2 — Past & Future Tenses",topics:["Past simple: I worked, she tested, they deployed","Past continuous: I was coding when...","Future: will vs going to","Dev vocab: bug, feature, deploy, commit, branch, merge, sprint"],resources:[{type:"🌐",name:"British Council — Past Simple",url:"https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/past-simple"},{type:"🎬",name:"BBC Learning English — Past Tenses",url:"https://www.bbc.co.uk/learningenglish/english/course/lower-intermediate/unit-3"},{type:"📘",name:"English Grammar in Use (Murphy)",url:"https://www.amazon.com/English-Grammar-Use-Self-Study-Intermediate/dp/1108457657"}]}
+],sun:[
+{subj:"prog",pom:5,title:"OOP Advanced & Design Patterns Intro",topics:["Polymorphism: same method, different behavior per class","Encapsulation: public vs private, hiding internals","Composition vs Inheritance: 'has a' vs 'is a'","Design patterns preview: Observer, State, Strategy","Practice: RPG battle system with OOP"],resources:[{type:"📘",name:"Game Programming Patterns (free online)",url:"https://gameprogrammingpatterns.com/"},{type:"🌐",name:"Refactoring Guru — Design Patterns",url:"https://refactoring.guru/design-patterns"},{type:"🎬",name:"ArjanCodes — Design Patterns in Python",url:"https://www.youtube.com/watch?v=v6tpISNjHf8"},{type:"📘",name:"Head First Design Patterns",url:"https://www.amazon.com/Head-First-Design-Patterns-Object-Oriented/dp/149207800X"}]},
+{subj:"linux",pom:4,title:"Linux History & Kernel Architecture",topics:["Unix history: Bell Labs, C language, BSD, POSIX","GNU, FSF → Linus Torvalds and Linux kernel (1991)","Linux kernel: monolithic but modular, lsmod, modprobe","Kernel subsystems: scheduler, memory manager, VFS","/proc, /sys virtual filesystems, dmesg, sysctl"],resources:[{type:"📘",name:"Linux Kernel Development (Robert Love)",url:"https://www.amazon.com/Linux-Kernel-Development-Robert-Love/dp/0672329468"},{type:"🎬",name:"Revolution OS — Documentary",url:"https://www.youtube.com/watch?v=4vW62KqKJ5A"},{type:"🌐",name:"kernel.org — Documentation",url:"https://www.kernel.org/doc/html/latest/"},{type:"🌐",name:"Arch Wiki — Kernel Modules",url:"https://wiki.archlinux.org/title/Kernel_module"}]},
+{subj:"eng",pom:3,title:"A2 — Tech Communication",topics:["Describing problems: crash, lag, slow, broken, error","Common tech verbs: configure, debug, test, implement","Write short Slack and commit messages","Practice: report a bug, survive a daily standup"],resources:[{type:"🌐",name:"How to Write Good Commit Messages",url:"https://cbea.ms/git-commit/"},{type:"🌐",name:"Conventional Commits",url:"https://www.conventionalcommits.org/"},{type:"🎬",name:"English for Devs — Standup Practice",url:"https://www.youtube.com/watch?v=P9JAyOTNdkE"}]}
+]},
+{week:4,theme:"Git, QA Foundations & Shell Basics",sat:[
+{subj:"prog",pom:4,title:"Git & Version Control",topics:["Why version control: test code, game projects, scripts","Git basics: clone, add, commit, push, pull","Branching strategies and pull requests","Merge conflicts: understanding and resolving","GitHub/GitLab: repos, issues, PRs, CI triggers"],resources:[{type:"📘",name:"Pro Git Book (free)",url:"https://git-scm.com/book/en/v2"},{type:"🎮",name:"Learn Git Branching — Interactive",url:"https://learngitbranching.js.org/"},{type:"🎬",name:"Fireship — Git It?",url:"https://www.youtube.com/watch?v=HkdAHXoRtos"},{type:"🌐",name:"GitHub Skills",url:"https://skills.github.com/"},{type:"🎮",name:"Oh My Git! — Git Game",url:"https://ohmygit.org/"}]},
+{subj:"qa",pom:4,title:"QA Foundations: Mindset & Types",topics:["QA vs QC vs Testing, cost of bugs","Where QA fits: Waterfall, Agile, DevOps","Shift-left testing: catching defects early","Testing types: functional/non-functional, black/white/grey box","Smoke, sanity, regression, exploratory testing"],resources:[{type:"📘",name:"ISTQB Foundation Syllabus v4.0 (free)",url:"https://www.istqb.org/certifications/certified-tester-foundation-level"},{type:"📘",name:"Lessons Learned in Software Testing",url:"https://www.amazon.com/Lessons-Learned-Software-Testing-Context-Driven/dp/0471081124"},{type:"🎬",name:"Software Testing Help — Full Course",url:"https://www.youtube.com/watch?v=oLc9gVM8FBM"},{type:"🌐",name:"Ministry of Testing",url:"https://www.ministryoftesting.com/dojo"}]},
+{subj:"eng",pom:2,title:"A2 — Modals & Comparisons",topics:["Modal verbs: can, could, should, must","Comparative & superlative: faster, the best","Networking vocab: server, client, API, database"],resources:[{type:"🌐",name:"British Council — Modal Verbs",url:"https://learnenglish.britishcouncil.org/grammar/b1-b2-grammar/modal-verbs"}]},
+{subj:"linux",pom:2,title:"Filesystem Hierarchy",topics:["FHS: /, /home, /etc, /var, /tmp, /usr, /opt, /boot","Everything is a file: regular, dirs, symlinks, devices"],resources:[{type:"📘",name:"How Linux Works (Brian Ward)",url:"https://www.amazon.com/How-Linux-Works-Brian-Ward/dp/1718500408"},{type:"🌐",name:"man hier — Filesystem Hierarchy",url:"https://man7.org/linux/man-pages/man7/hier.7.html"},{type:"🌐",name:"FHS Specification",url:"https://refspecs.linuxfoundation.org/FHS_3.0/fhs-3.0.html"}]}
+],sun:[
+{subj:"qa",pom:4,title:"Test Documentation & Bug Reports",topics:["Writing test cases: preconditions, steps, expected results","Test plans: scope, approach, resources, schedule","Bug reports that developers actually read","Severity vs Priority","BVA, equivalence partitioning, RTM"],resources:[{type:"📘",name:"ISTQB Syllabus Ch. 4 — Test Design",url:"https://www.istqb.org/certifications/certified-tester-foundation-level"},{type:"🌐",name:"Guru99 — Bug Reports",url:"https://www.guru99.com/bug-report.html"},{type:"🎬",name:"SDET Unicorns — Bug Report Tutorial",url:"https://www.youtube.com/watch?v=gMbvRjLihGs"}]},
+{subj:"linux",pom:4,title:"Mastering the Shell (Bash) I",topics:["Bash: commands, arguments, options, exit codes","Navigation: cd, pwd, ls, tree, pushd/popd","File ops: cp, mv, rm, mkdir, touch, ln, rsync","Viewing: cat, less, head, tail, wc, file, stat","Searching: find, locate, which, grep"],resources:[{type:"📘",name:"The Linux Command Line (free)",url:"https://linuxcommand.org/tlcl.php"},{type:"🎮",name:"OverTheWire Bandit — CLI Hacking",url:"https://overthewire.org/wargames/bandit/"},{type:"🌐",name:"explainshell.com",url:"https://explainshell.com/"},{type:"🎮",name:"Cmdchallenge",url:"https://cmdchallenge.com/"},{type:"🌐",name:"tldr pages",url:"https://tldr.sh/"}]},
+{subj:"godot",pom:2,title:"Godot Preview: Engine Overview",topics:["Install Godot 4.x, navigate the editor","Node and Scene system: everything is a tree"],resources:[{type:"🌐",name:"Godot — Getting Started",url:"https://docs.godotengine.org/en/stable/getting_started/introduction/index.html"},{type:"🎬",name:"Brackeys — Make a Game in Godot 4",url:"https://www.youtube.com/watch?v=LOhfqjmasi0"},{type:"🌐",name:"Godot Download",url:"https://godotengine.org/download"}]},
+{subj:"eng",pom:2,title:"A2 — Reading Practice",topics:["Read README files and basic docs","Understand simple tech tutorials (with subtitles)"],resources:[{type:"🌐",name:"freeCodeCamp",url:"https://www.freecodecamp.org/"},{type:"🎧",name:"6 Minute English — BBC",url:"https://www.bbc.co.uk/learningenglish/english/features/6-minute-english"}]}
+]},
+{week:5,theme:"JavaScript, Agile Tools & GDScript",sat:[
+{subj:"prog",pom:4,title:"JavaScript Essentials",topics:["Variables (let, const), types, operators","Functions, arrow functions, callbacks","Promises and async/await","DOM manipulation basics","ES6+: destructuring, spread, template literals"],resources:[{type:"📘",name:"javascript.info — Modern JS Tutorial",url:"https://javascript.info/"},{type:"📘",name:"MDN — JavaScript Guide",url:"https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"},{type:"🎬",name:"Fireship — JS in 100 Seconds",url:"https://www.youtube.com/watch?v=DHvZLI7Db8E"},{type:"🎮",name:"freeCodeCamp — JS Algorithms",url:"https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/"}]},
+{subj:"qa",pom:4,title:"Agile, Scrum & Tooling",topics:["Scrum: standup, planning, review, retro","User stories, acceptance criteria, DoD","Jira: issues, epics, workflows, JQL","Confluence: test plans, runbooks","TestRail / Zephyr / Xray"],resources:[{type:"🌐",name:"Atlassian — Jira Guide",url:"https://www.atlassian.com/software/jira/guides/getting-started"},{type:"🌐",name:"Atlassian — Confluence Guide",url:"https://www.atlassian.com/software/confluence/guides/get-started"},{type:"🌐",name:"JQL Cheat Sheet",url:"https://www.atlassian.com/blog/jira-software/jql-the-most-flexible-way-to-search-jira"},{type:"🌐",name:"Scrum Guide (official)",url:"https://scrumguides.org/"},{type:"🎬",name:"Jira Tutorial for Beginners",url:"https://www.youtube.com/watch?v=GWxMTvRGIpc"}]},
+{subj:"eng",pom:2,title:"A2 — Standup & Commit English",topics:["Daily standups: 'Yesterday I...', 'Today I will...'","Write clear commit messages","Countable vs uncountable nouns"],resources:[{type:"🌐",name:"Conventional Commits",url:"https://www.conventionalcommits.org/"},{type:"🌐",name:"British Council — Countable/Uncountable",url:"https://learnenglish.britishcouncil.org/grammar/a1-a2-grammar/countable-uncountable-nouns"}]},
+{subj:"linux",pom:2,title:"Shell Mastery II",topics:["Text processing: sed, awk, cut, sort, uniq, tr, tee","I/O redirection: stdin, stdout, stderr, pipes, xargs"],resources:[{type:"📘",name:"The Linux Command Line (Ch. 20–21)",url:"https://linuxcommand.org/tlcl.php"},{type:"🌐",name:"sed & awk 101 — DigitalOcean",url:"https://www.digitalocean.com/community/tutorials/the-basics-of-using-the-sed-stream-editor"},{type:"🎬",name:"Luke Smith — sed, awk, grep",url:"https://www.youtube.com/watch?v=vGJSHaFalQ8"}]}
+],sun:[
+{subj:"godot",pom:5,title:"GDScript & Engine Fundamentals",topics:["GDScript syntax: Python-like but for games","GDScript vs Python: @onready, signals, typed arrays","Variables (var, const), functions (func), @export","_ready(), _process(delta), _physics_process(delta)","Delta time: frame-rate independent movement"],resources:[{type:"🌐",name:"Godot Docs — GDScript Reference",url:"https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_basics.html"},{type:"🎬",name:"GDQuest — GDScript From Zero",url:"https://www.gdquest.com/tutorial/godot/gdscript/"},{type:"🌐",name:"Godot — Your First 2D Game",url:"https://docs.godotengine.org/en/stable/getting_started/first_2d_game/index.html"},{type:"🎬",name:"Brackeys — GDScript Crash Course",url:"https://www.youtube.com/watch?v=e1zJS31tr88"}]},
+{subj:"godot",pom:3,title:"Nodes, Signals & Scenes",topics:["Essential nodes: Node2D, Sprite2D, CharacterBody2D, Area2D","Signals: Godot's observer pattern, connecting via code","Custom signals: defining, emitting, connecting","Scene instancing: preload(), instantiate(), groups"],resources:[{type:"🌐",name:"Godot Docs — Signals",url:"https://docs.godotengine.org/en/stable/getting_started/step_by_step/signals.html"},{type:"🌐",name:"Godot Docs — Instancing",url:"https://docs.godotengine.org/en/stable/getting_started/step_by_step/instancing.html"},{type:"🎬",name:"GDQuest — Understanding Signals",url:"https://www.youtube.com/watch?v=NK_SYVO7lMA"}]},
+{subj:"linux",pom:2,title:"Users, Groups & Permissions",topics:["Users: root vs regular, /etc/passwd, /etc/shadow","Permissions: rwx, chmod, chown, SUID, SGID, sudo"],resources:[{type:"🌐",name:"Linux Journey — Permissions",url:"https://linuxjourney.com/lesson/file-permissions"},{type:"🌐",name:"Arch Wiki — Users and Groups",url:"https://wiki.archlinux.org/title/Users_and_groups"}]},
+{subj:"eng",pom:2,title:"A2 — Writing Practice",topics:["Write a short bug report in English","Describe a technical problem to a colleague"],resources:[{type:"🌐",name:"Grammarly — Writing Assistant",url:"https://www.grammarly.com/"},{type:"🌐",name:"Ludwig.guru — Sentence Search",url:"https://ludwig.guru/"}]}
+]},
+{week:6,theme:"Web Testing, Input/Movement & Processes",sat:[{subj:"qa",pom:5,title:"Web Application Testing",topics:["HTTP: requests, responses, methods, status codes","Testing forms: validation, edge cases","Cross-browser and responsive testing","Cookie and session testing","DevTools: Network, Console, Elements"],resources:[{type:"🌐",name:"MDN — HTTP Overview",url:"https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview"},{type:"🎬",name:"Chrome DevTools Docs",url:"https://developer.chrome.com/docs/devtools/"},{type:"🌐",name:"BrowserStack — Cross-Browser Guide",url:"https://www.browserstack.com/guide/cross-browser-testing"},{type:"🎮",name:"The-Internet — Practice Site",url:"https://the-internet.herokuapp.com/"}]},{subj:"godot",pom:4,title:"Input, Movement & Physics",topics:["Input Map: actions, key bindings, gamepad","Polling vs event-based input","CharacterBody2D: move_and_slide(), velocity","Top-down 8-directional smooth movement","Collision layers/masks, Area2D triggers"],resources:[{type:"🌐",name:"Godot Docs — InputEvent",url:"https://docs.godotengine.org/en/stable/tutorials/inputs/inputevent.html"},{type:"🌐",name:"Godot Docs — CharacterBody2D",url:"https://docs.godotengine.org/en/stable/tutorials/physics/using_character_body_2d.html"},{type:"🎬",name:"HeartBeast — Top-Down Movement",url:"https://www.youtube.com/watch?v=TQKXU7iSWUU"}]},{subj:"eng",pom:3,title:"B1 — Intermediate Grammar",topics:["Present perfect: I have tested, she has deployed","First & second conditionals: if X then Y","Passive voice: the server was updated"],resources:[{type:"📘",name:"English Grammar in Use (Murphy) — Units 13–21",url:"https://www.amazon.com/English-Grammar-Use-Self-Study-Intermediate/dp/1108457657"},{type:"🌐",name:"British Council — B1 Grammar",url:"https://learnenglish.britishcouncil.org/grammar/b1-b2-grammar"}]}],sun:[{subj:"qa",pom:4,title:"API Testing (Manual) with Postman",topics:["REST: GET, POST, PUT, DELETE, PATCH","JSON request/response bodies","Postman: collections, environments, variables","Auth: API keys, Bearer tokens, OAuth","Status codes: 2xx, 4xx, 5xx"],resources:[{type:"🌐",name:"Postman Learning Center",url:"https://learning.postman.com/docs/getting-started/introduction/"},{type:"🎬",name:"freeCodeCamp — Postman Full Course",url:"https://www.youtube.com/watch?v=VywxIQ2ZXw4"},{type:"🌐",name:"RESTful API Design",url:"https://restfulapi.net/"},{type:"🎮",name:"Reqres.in — Fake API",url:"https://reqres.in/"}]},{subj:"linux",pom:4,title:"Processes & System Administration",topics:["Process lifecycle: fork, exec, exit, zombie","Process commands: ps, top, htop, kill, nice, jobs","Systemd: units, services, systemctl, journalctl","Boot: UEFI → GRUB → initramfs → kernel → systemd"],resources:[{type:"🌐",name:"Arch Wiki — Systemd",url:"https://wiki.archlinux.org/title/Systemd"},{type:"📘",name:"OSTEP — Process Chapter (free)",url:"https://pages.cs.wisc.edu/~remzi/OSTEP/cpu-intro.pdf"},{type:"🎬",name:"The Urban Penguin — Systemd",url:"https://www.youtube.com/watch?v=5JVBpXiYMKo"}]},{subj:"godot",pom:2,title:"Milestone: Godot Playground",topics:["Build sandbox: move, collect coins, fight enemies","HUD with score and health using signals"],resources:[{type:"🌐",name:"Godot — Your First 2D Game",url:"https://docs.godotengine.org/en/stable/getting_started/first_2d_game/index.html"}]},{subj:"eng",pom:2,title:"B1 — Professional Phrases",topics:["I suggest..., Could we..., In my opinion...","Agile vocab: velocity, retrospective, stakeholder, MVP"],resources:[{type:"🎧",name:"Business English Pod",url:"https://www.businessenglishpod.com/"}]}]},
+{week:7,theme:"SQL, Sprites & Package Management",sat:[{subj:"qa",pom:4,title:"Database Testing & SQL",topics:["SQL: SELECT, INSERT, UPDATE, DELETE","Joins, filters, data validation queries","Schemas, keys, relationships","Verifying data integrity"],resources:[{type:"🎮",name:"SQLBolt — Interactive SQL",url:"https://sqlbolt.com/"},{type:"🎮",name:"SQLZoo",url:"https://sqlzoo.net/"},{type:"🌐",name:"W3Schools SQL",url:"https://www.w3schools.com/sql/"},{type:"📘",name:"Mode — SQL Tutorial",url:"https://mode.com/sql-tutorial"}]},{subj:"godot",pom:4,title:"Sprites, Animation & TileMaps",topics:["Sprite sheets and texture atlases","AnimatedSprite2D: frame-by-frame animations","AnimationPlayer: property, method tracks","TileMap: levels, collisions, autotiling"],resources:[{type:"🌐",name:"Godot Docs — Sprite Animation",url:"https://docs.godotengine.org/en/stable/tutorials/2d/2d_sprite_animation.html"},{type:"🌐",name:"Godot Docs — TileMaps",url:"https://docs.godotengine.org/en/stable/tutorials/2d/using_tilemaps.html"},{type:"🎬",name:"HeartBeast — AnimationPlayer",url:"https://www.youtube.com/watch?v=WbJ7T4INGkc"},{type:"🌐",name:"OpenGameArt — Free Assets",url:"https://opengameart.org/"}]},{subj:"linux",pom:2,title:"Package Management",topics:["APT (Debian), DNF (Fedora), Pacman (Arch)","Repos, deps, building from source (AUR)"],resources:[{type:"🌐",name:"Arch Wiki — Pacman",url:"https://wiki.archlinux.org/title/Pacman"},{type:"🌐",name:"Debian APT Guide",url:"https://www.debian.org/doc/manuals/apt-guide/"}]},{subj:"eng",pom:2,title:"B1 — Technical Presentations",topics:["Present a technical demo: structure & phrases","Relative clauses: who, which, that, where"],resources:[{type:"🎬",name:"TED — How to Present",url:"https://www.youtube.com/watch?v=8S0FDjFBj8o"}]}],sun:[{subj:"godot",pom:5,title:"UI, Audio & Game Polish",topics:["Control nodes, anchors, containers for UI","Main menu, HUD, pause menu","Audio: AudioStreamPlayer, buses","Camera2D: smooth follow, screen shake","Tweens, particles, transitions — juice"],resources:[{type:"🌐",name:"Godot Docs — GUI",url:"https://docs.godotengine.org/en/stable/tutorials/ui/index.html"},{type:"🌐",name:"Godot Docs — Audio",url:"https://docs.godotengine.org/en/stable/tutorials/audio/index.html"},{type:"🎬",name:"GMTK — Game Feel (Juice)",url:"https://www.youtube.com/watch?v=216_5nu4aVQ"},{type:"🌐",name:"Freesound — Free SFX",url:"https://freesound.org/"}]},{subj:"qa",pom:3,title:"Mobile Testing & Review",topics:["iOS vs Android differences","Device fragmentation, gestures","Emulators vs simulators, ADB"],resources:[{type:"🌐",name:"Android — Testing Fundamentals",url:"https://developer.android.com/training/testing"},{type:"🌐",name:"BrowserStack — Mobile Testing",url:"https://www.browserstack.com/guide/mobile-testing"}]},{subj:"linux",pom:2,title:"Logging & System Health",topics:["journalctl, syslog, /var/log","Monitoring: htop, iotop, vmstat, sar"],resources:[{type:"🌐",name:"Arch Wiki — Systemd/Journal",url:"https://wiki.archlinux.org/title/Systemd/Journal"}]},{subj:"eng",pom:2,title:"B1 — Email & Code Review",topics:["Write professional emails","Give code review feedback in English"],resources:[{type:"🌐",name:"Google — Code Review Practices",url:"https://google.github.io/eng-practices/review/"}]}]},
+{week:8,theme:"Game State, Networking & Test Frameworks",sat:[{subj:"godot",pom:5,title:"FSM, Autoloads & Save/Load",topics:["FSM: idle, walk, attack, hurt, dead","Enums, match statements, state nodes","Autoloads: GameManager, Events bus","Save/Load: JSON, ConfigFile, Resources","Custom Resources: data-driven .tres"],resources:[{type:"📘",name:"Game Programming Patterns — State",url:"https://gameprogrammingpatterns.com/state.html"},{type:"🌐",name:"Godot — Singletons (Autoload)",url:"https://docs.godotengine.org/en/stable/tutorials/scripting/singletons_autoload.html"},{type:"🌐",name:"Godot — Saving Games",url:"https://docs.godotengine.org/en/stable/tutorials/io/saving_games.html"},{type:"🎬",name:"GDQuest — State Machines",url:"https://www.youtube.com/watch?v=qwOM3v8T33Q"}]},{subj:"linux",pom:4,title:"Networking Fundamentals",topics:["TCP/IP model: layers, protocols","IP, subnets, DNS, DHCP, ports","Linux: ip, ss, ping, traceroute, dig, curl","Config: /etc/hosts, NetworkManager"],resources:[{type:"📘",name:"Computer Networking (Kurose)",url:"https://www.amazon.com/Computer-Networking-Top-Down-Approach-7th/dp/0133594149"},{type:"🎮",name:"SubnettingPractice.com",url:"https://subnettingpractice.com/"},{type:"🌐",name:"Arch Wiki — Network Config",url:"https://wiki.archlinux.org/title/Network_configuration"},{type:"🎬",name:"NetworkChuck — Networking",url:"https://www.youtube.com/watch?v=qiQR5rTSshw"}]},{subj:"eng",pom:3,title:"B1 — Reported Speech & DevOps",topics:["Reported speech: He said that...","DevOps: CI/CD, pipeline, container, rollback","Architecture: microservices, monolith, cache"],resources:[{type:"🌐",name:"British Council — Reported Speech",url:"https://learnenglish.britishcouncil.org/grammar/b1-b2-grammar/reported-speech"},{type:"🎧",name:"Syntax.fm Podcast",url:"https://syntax.fm/"}]}],sun:[{subj:"prog",pom:4,title:"Python for Automation (Pytest)",topics:["Virtual environments and pip","Pytest: test functions, assertions, fixtures","Parametrize: data-driven testing","Running tests, debugging failures"],resources:[{type:"🌐",name:"Pytest Official Docs",url:"https://docs.pytest.org/en/stable/"},{type:"📘",name:"Python Testing with Pytest (Okken)",url:"https://www.amazon.com/Python-Testing-pytest-Brian-Okken/dp/1680508601"},{type:"🎬",name:"ArjanCodes — Pytest Tutorial",url:"https://www.youtube.com/watch?v=cHYq1MRoyI0"},{type:"🌐",name:"Real Python — Effective Pytest",url:"https://realpython.com/pytest-python-testing/"}]},{subj:"qa",pom:4,title:"UI Automation: Selenium & Playwright",topics:["WebDriver architecture and setup","Locators: ID, CSS, XPath","Waits: implicit, explicit, fluent","Page Object Model (POM)"],resources:[{type:"🌐",name:"Selenium Docs",url:"https://www.selenium.dev/documentation/"},{type:"🌐",name:"Playwright Docs (Python)",url:"https://playwright.dev/python/docs/intro"},{type:"🎬",name:"SDET Unicorns — Selenium Course",url:"https://www.youtube.com/watch?v=j7VZsCCnptM"},{type:"🎮",name:"The-Internet — Practice Site",url:"https://the-internet.herokuapp.com/"}]},{subj:"linux",pom:2,title:"Firewalls & SSH",topics:["iptables/nftables, firewalld, UFW","SSH: keys, config, tunneling, SCP"],resources:[{type:"🌐",name:"Arch Wiki — SSH",url:"https://wiki.archlinux.org/title/OpenSSH"},{type:"🌐",name:"DigitalOcean — UFW Essentials",url:"https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands"}]},{subj:"eng",pom:2,title:"B1 — Listening Practice",topics:["Tech podcasts: Syntax.fm, BBC","Understand tech talks at 70-80%"],resources:[{type:"🎧",name:"Syntax.fm",url:"https://syntax.fm/"},{type:"🎧",name:"Software Engineering Daily",url:"https://softwareengineeringdaily.com/"}]}]},
+{week:9,theme:"Playwright, Game Math & Bash Scripting",sat:[{subj:"qa",pom:5,title:"Playwright & Cross-Browser",topics:["Playwright: faster, more reliable","Auto-waiting, network interception, tracing","Cross-browser: Chromium, Firefox, WebKit","Headless mode for CI","Screenshot/video on failure"],resources:[{type:"🌐",name:"Playwright Docs",url:"https://playwright.dev/python/docs/intro"},{type:"🌐",name:"Playwright — Trace Viewer",url:"https://playwright.dev/docs/trace-viewer"},{type:"🎬",name:"LambdaTest — Playwright Tutorial",url:"https://www.youtube.com/watch?v=wGr5rz8WGCE"},{type:"🌐",name:"Playwright — Best Practices",url:"https://playwright.dev/docs/best-practices"}]},{subj:"godot",pom:4,title:"Vectors & Coordinate Systems",topics:["2D coordinates, Vector2 in Godot","Vector arithmetic: add, subtract, multiply","Normalization: unit vectors, diagonal fix","Distance, dot product, lerp","Practice: enemy tracks player"],resources:[{type:"🌐",name:"Godot Docs — Vector Math",url:"https://docs.godotengine.org/en/stable/tutorials/math/vector_math.html"},{type:"🎬",name:"3Blue1Brown — Linear Algebra",url:"https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab"},{type:"📘",name:"Essential Mathematics for Games",url:"https://www.amazon.com/Essential-Mathematics-Games-Interactive-Applications/dp/1482250926"},{type:"🎮",name:"GeoGebra — Vector Visualizer",url:"https://www.geogebra.org/"}]},{subj:"eng",pom:3,title:"B1 — Technical Writing",topics:["Write a technical proposal","Structure: problem → solution → trade-offs","Explain decisions clearly"],resources:[{type:"🌐",name:"Google Technical Writing (free)",url:"https://developers.google.com/tech-writing"},{type:"🌐",name:"Write the Docs",url:"https://www.writethedocs.org/guide/"}]}],sun:[{subj:"linux",pom:5,title:"Bash Scripting I",topics:["Shebang, variables, quoting rules","Conditionals: if/elif/else, test, [[ ]]","Loops: for, while, until","Functions: local vars, $1, $@, $#","Practice: backup script, log analyzer"],resources:[{type:"📘",name:"The Linux Command Line — Part 4",url:"https://linuxcommand.org/tlcl.php"},{type:"🌐",name:"Bash Guide (Greg's Wiki)",url:"https://mywiki.wooledge.org/BashGuide"},{type:"🌐",name:"ShellCheck — Linter",url:"https://www.shellcheck.net/"},{type:"🎮",name:"Exercism — Bash Track",url:"https://exercism.org/tracks/bash"},{type:"🎬",name:"LearnLinuxTV — Bash Full Course",url:"https://www.youtube.com/watch?v=2733cRPudvI"}]},{subj:"godot",pom:4,title:"Trig & Randomness for Games",topics:["Sin/Cos: circular motion, rotation","Atan2: angles for aiming, projectiles","Random: weighted loot tables","Seeded random, A* pathfinding, line of sight"],resources:[{type:"🌐",name:"Godot — Random Numbers",url:"https://docs.godotengine.org/en/stable/tutorials/math/random_number_generation.html"},{type:"🌐",name:"Red Blob Games — A* Pathfinding",url:"https://www.redblobgames.com/pathfinding/a-star/introduction.html"},{type:"🎬",name:"Freya Holmér — Math for Games",url:"https://www.youtube.com/watch?v=MOYiVLEnhrw"},{type:"🌐",name:"Godot — NavigationAgent2D",url:"https://docs.godotengine.org/en/stable/tutorials/navigation/navigation_introduction_2d.html"}]},{subj:"eng",pom:2,title:"B1 Milestone Review",topics:["Lead a sprint review in English","Self-assess: can you explain a decision?"],resources:[{type:"🎮",name:"Tandem — Language Exchange",url:"https://www.tandem.net/"},{type:"🌐",name:"CEFR Self-Assessment Grid",url:"https://www.coe.int/en/web/common-european-framework-reference-languages/table-1-cefr-3.3-common-reference-levels-global-scale"}]},{subj:"qa",pom:1,title:"API Automation Preview",topics:["Requests + Pytest overview"],resources:[{type:"🌐",name:"Requests Library",url:"https://requests.readthedocs.io/"}]}]},
+{week:10,theme:"API Automation, Proc Gen & Regex",sat:[{subj:"qa",pom:5,title:"API Automation & Contract Testing",topics:["Requests + Pytest for API tests","Response validation: status, body, schema","Data-driven with parametrize","Contract testing with Pact","GraphQL testing basics"],resources:[{type:"🌐",name:"Requests Quickstart",url:"https://requests.readthedocs.io/en/latest/user/quickstart/"},{type:"🌐",name:"Pact — Contract Testing",url:"https://docs.pact.io/"},{type:"🌐",name:"jsonschema Python",url:"https://python-jsonschema.readthedocs.io/"},{type:"🌐",name:"GraphQL — Learn",url:"https://graphql.org/learn/"}]},{subj:"godot",pom:4,title:"Procedural Generation",topics:["Why PCG defines roguelikes","Random Walk dungeon generation","BSP: Binary Space Partitioning","Cellular Automata caves","Room-and-corridor algorithm"],resources:[{type:"🌐",name:"RogueBasin — Dungeon Algorithms",url:"https://www.roguebasin.com/index.php/Dungeon-Building_Algorithm"},{type:"📘",name:"PCG in Games (free textbook)",url:"http://pcgbook.com/"},{type:"🌐",name:"Red Blob Games",url:"https://www.redblobgames.com/"},{type:"🎬",name:"Roguelike Tutorial (concepts)",url:"https://bfnightly.bracketproductions.com/"}]},{subj:"eng",pom:3,title:"B2 — Complex Grammar",topics:["Third conditional: if I had tested...","Discourse markers: however, furthermore","Complex linking: although, despite, whereas"],resources:[{type:"📘",name:"Advanced Grammar in Use (Hewings)",url:"https://www.amazon.com/Advanced-Grammar-Self-Study-Reference-Practice/dp/1107699894"},{type:"🌐",name:"British Council — B2 Grammar",url:"https://learnenglish.britishcouncil.org/grammar/b1-b2-grammar"}]}],sun:[{subj:"linux",pom:5,title:"Regex & Advanced Text Processing",topics:["Regex: literal, metachar, quantifiers, groups","grep -E, sed with regex, awk patterns","jq for JSON processing","Practice: parse logs, transform configs"],resources:[{type:"🎮",name:"RegexOne — Interactive",url:"https://regexone.com/"},{type:"🎮",name:"Regex101 — Test & Debug",url:"https://regex101.com/"},{type:"🌐",name:"jq Manual",url:"https://stedolan.github.io/jq/manual/"},{type:"📘",name:"Mastering Regex (Friedl)",url:"https://www.amazon.com/Mastering-Regular-Expressions-Jeffrey-Friedl/dp/0596528124"},{type:"🎮",name:"Regex Crossword",url:"https://regexcrossword.com/"}]},{subj:"godot",pom:4,title:"Advanced GDScript & Architecture",topics:["Typed GDScript: var health: int = 100","Custom Resources: ItemData, EnemyData","Composition vs inheritance","Code organization & naming"],resources:[{type:"🌐",name:"Godot — Typed GDScript",url:"https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_basics.html#typed-gdscript"},{type:"🌐",name:"Godot — Custom Resources",url:"https://docs.godotengine.org/en/stable/tutorials/scripting/resources.html"},{type:"🎬",name:"GDQuest — Clean Code",url:"https://www.gdquest.com/"}]},{subj:"eng",pom:2,title:"B2 — Business English",topics:["ROI, KPI, OKR, deliverable, scope creep","Negotiation: proposal, compromise, terms"],resources:[{type:"🎧",name:"Business English Pod",url:"https://www.businessenglishpod.com/"},{type:"📘",name:"Harvard Business Review",url:"https://hbr.org/"}]},{subj:"qa",pom:1,title:"Cypress Preview",topics:["Cypress E2E: what makes it different"],resources:[{type:"🌐",name:"Cypress Docs",url:"https://docs.cypress.io/guides/getting-started/installing-cypress"}]}]},
+{week:11,theme:"E2E Testing, Turn-Based Systems & Automation",sat:[{subj:"qa",pom:5,title:"Cypress, Jest & BDD",topics:["Cypress E2E: commands, assertions, fixtures","Jest/Mocha for JS unit tests","Test suites, tags, parallel execution","Allure/HTML reports, screenshots","BDD: Given/When/Then, Gherkin, Cucumber"],resources:[{type:"🌐",name:"Cypress — Writing Tests",url:"https://docs.cypress.io/guides/end-to-end-testing/writing-your-first-end-to-end-test"},{type:"🌐",name:"Jest Docs",url:"https://jestjs.io/docs/getting-started"},{type:"🌐",name:"Allure Report",url:"https://allurereport.org/docs/"},{type:"🌐",name:"Cucumber — BDD",url:"https://cucumber.io/docs/guides/"}]},{subj:"godot",pom:4,title:"Turn-Based Systems & Grid Movement",topics:["Real-time vs turn-based architecture","Turn manager: player → enemy → environment","Grid world: 2D array, cell snapping","Energy/speed systems","Smooth visual tweens over logic snaps"],resources:[{type:"🌐",name:"RogueBasin — Turn Scheduling",url:"https://www.roguebasin.com/index.php?title=Time_Systems"},{type:"📘",name:"Roguelike Tutorial (TCOD)",url:"https://rogueliketutorials.com/"},{type:"🌐",name:"Godot — Tweens",url:"https://docs.godotengine.org/en/stable/classes/class_tween.html"}]},{subj:"eng",pom:3,title:"B2 — Leadership Vocabulary",topics:["Delegate, mentor, escalate, prioritize","Handle difficult conversations","Present to non-technical stakeholders"],resources:[{type:"🎬",name:"TED — Leadership Talks",url:"https://www.ted.com/playlists/140/how_leaders_inspire"},{type:"🎧",name:"HBR IdeaCast",url:"https://hbr.org/2018/01/podcast-ideacast"}]}],sun:[{subj:"linux",pom:5,title:"Bash Scripting II & Automation",topics:["Arrays, associative arrays, string ops","Error handling: set -euo pipefail, trap","Cron jobs, systemd timers","Dotfiles: symlinks, stow, git-tracked","Practice: automated backup system"],resources:[{type:"🌐",name:"Bash Hackers Wiki",url:"https://wiki.bash-hackers.org/"},{type:"🌐",name:"Arch Wiki — Cron",url:"https://wiki.archlinux.org/title/Cron"},{type:"🌐",name:"GNU Stow",url:"https://www.gnu.org/software/stow/"},{type:"🎬",name:"DistroTube — Dotfiles",url:"https://www.youtube.com/watch?v=BE87kUCKBVo"}]},{subj:"godot",pom:4,title:"FOV, Shadowcasting & Map Memory",topics:["FOV: information as resource","Recursive shadowcasting algorithm","Three tile states: unexplored, dim, lit","Map memory, dynamic lighting, torch effects"],resources:[{type:"🌐",name:"RogueBasin — FOV",url:"https://www.roguebasin.com/index.php?title=Category:FOV"},{type:"🌐",name:"Symmetric Shadowcasting",url:"https://www.albertford.com/shadowcasting/"},{type:"📘",name:"Roguelike Tutorial — FOV chapter",url:"https://rogueliketutorials.com/tutorials/tcod/v2/part-4/"}]},{subj:"eng",pom:2,title:"B2 — Technical RFCs",topics:["Write an architecture decision record","Security vocab: vulnerability, encryption, audit"],resources:[{type:"🌐",name:"ADR GitHub",url:"https://adr.github.io/"},{type:"🌐",name:"OWASP Glossary",url:"https://owasp.org/www-community/Glossary"}]},{subj:"qa",pom:1,title:"CI/CD Preview",topics:["What is CI/CD and why QA cares"],resources:[{type:"🌐",name:"GitHub Actions Quickstart",url:"https://docs.github.com/en/actions/quickstart"}]}]},
+{week:12,theme:"CI/CD, Combat Systems & Services",sat:[{subj:"qa",pom:5,title:"CI/CD Fundamentals for QA",topics:["Jenkins, GitHub Actions, GitLab CI","Triggering tests on pull requests","Build stages: lint → unit → integration → e2e","Artifacts: reports, screenshots, videos","Practice: GitHub Actions + Pytest"],resources:[{type:"🌐",name:"GitHub Actions Guide",url:"https://docs.github.com/en/actions"},{type:"🌐",name:"Jenkins Tutorials",url:"https://www.jenkins.io/doc/tutorials/"},{type:"🎬",name:"TechWorld with Nana — CI/CD",url:"https://www.youtube.com/watch?v=7S_lqy-c5V0"},{type:"🌐",name:"GitLab CI/CD",url:"https://docs.gitlab.com/ee/ci/"}]},{subj:"godot",pom:4,title:"Combat Systems & RPG Math",topics:["Melee combat, damage formulas","Formula: base * (atk/(atk+def)) * variance","Critical hits, status effects","XP & leveling, stat growth curves","Depth scaling per dungeon floor"],resources:[{type:"🌐",name:"RogueBasin — Combat",url:"https://www.roguebasin.com/index.php?title=Preferred_Stats_System"},{type:"🎬",name:"GDC — Balancing RPG Combat",url:"https://www.youtube.com/watch?v=tR-9oXiytsk"},{type:"📘",name:"Game Balance Concepts",url:"https://gamebalanceconcepts.wordpress.com/"}]},{subj:"eng",pom:3,title:"B2 — Client Communication",topics:["Negotiate timelines and scope","Technical incident reports","Cross-functional meeting vocab"],resources:[{type:"🎧",name:"Business English Pod — Negotiations",url:"https://www.businessenglishpod.com/category/negotiations/"},{type:"🌐",name:"PagerDuty — Incident Response",url:"https://response.pagerduty.com/"}]}],sun:[{subj:"linux",pom:5,title:"Services & Web Servers",topics:["Apache & Nginx: config, virtual hosts","DNS: zones, A, AAAA, CNAME, MX records","MariaDB/PostgreSQL basic setup","TLS/SSL with Let's Encrypt","Compare across Debian, Fedora, Arch"],resources:[{type:"🌐",name:"Nginx Beginner's Guide",url:"https://nginx.org/en/docs/beginners_guide.html"},{type:"🌐",name:"DigitalOcean — LEMP Stack",url:"https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-22-04"},{type:"🌐",name:"Let's Encrypt",url:"https://letsencrypt.org/getting-started/"},{type:"🌐",name:"Arch Wiki — Nginx",url:"https://wiki.archlinux.org/title/Nginx"}]},{subj:"qa",pom:3,title:"Docker for QA",topics:["Docker: images, containers, Dockerfile","Tests inside containers","Docker Compose for test envs","Selenium Grid + Docker"],resources:[{type:"🌐",name:"Docker Getting Started",url:"https://docs.docker.com/get-started/"},{type:"🌐",name:"Selenium Grid Docker",url:"https://github.com/SeleniumHQ/docker-selenium"},{type:"🎬",name:"Nana — Docker Full Course",url:"https://www.youtube.com/watch?v=3c-iBn73dDE"}]},{subj:"godot",pom:2,title:"Roguelike Milestone",topics:["Grid-based dungeon with FOV + combat","3+ enemy types"],resources:[{type:"🎮",name:"Play: Brogue, DCSS for inspiration",url:"https://crawl.develz.org/play.htm"}]},{subj:"eng",pom:2,title:"B2 — Mock Interviews",topics:["Technical interview questions","'Tell me about a time when...'"],resources:[{type:"🌐",name:"Pramp — Mock Interviews",url:"https://www.pramp.com/"}]}]},
+{week:13,theme:"Environments, Items & Hardening",sat:[{subj:"qa",pom:4,title:"Test Environments & Data",topics:["Staging vs QA vs Production","Test data: factories, fixtures, seeding","Feature flags","Observability basics"],resources:[{type:"🌐",name:"LaunchDarkly — Feature Flags",url:"https://launchdarkly.com/blog/what-are-feature-flags/"},{type:"🌐",name:"Grafana Docs",url:"https://grafana.com/docs/grafana/latest/"}]},{subj:"godot",pom:5,title:"Items, Inventory & Equipment",topics:["Item architecture: Weapon, Armor, Consumable","Inventory: slots, stacking, sorting","Equipment with stat modifiers","Item identification system","Loot tables, rarity, affixes"],resources:[{type:"🌐",name:"RogueBasin — Items",url:"https://www.roguebasin.com/index.php?title=Items"},{type:"📘",name:"Game Programming Patterns — Type Object",url:"https://gameprogrammingpatterns.com/type-object.html"},{type:"🎬",name:"GDQuest — Inventory System",url:"https://www.youtube.com/watch?v=V79YabQZC1s"}]},{subj:"eng",pom:3,title:"B2 Milestone & Review",topics:["Write a project proposal","Lead a client call simulation","B2 self-assessment"],resources:[{type:"🌐",name:"CEFR B2 Descriptors",url:"https://www.coe.int/en/web/common-european-framework-reference-languages/table-1-cefr-3.3-common-reference-levels-global-scale"}]}],sun:[{subj:"linux",pom:5,title:"System Hardening & Security",topics:["Least privilege, attack surface reduction","SSH hardening, fail2ban","PAM: Pluggable Authentication","SELinux / AppArmor","Audit framework, AIDE/Tripwire"],resources:[{type:"🌐",name:"CIS Benchmarks",url:"https://www.cisecurity.org/cis-benchmarks"},{type:"🌐",name:"Arch Wiki — Security",url:"https://wiki.archlinux.org/title/Security"},{type:"🌐",name:"Red Hat — SELinux Guide",url:"https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/using_selinux/index"}]},{subj:"godot",pom:3,title:"Enemy AI & Behavior",topics:["AI archetypes: aggressive, defensive, ranged","Behavior trees vs FSM","Pack behavior, boss design"],resources:[{type:"📘",name:"Game Programming Patterns — Component",url:"https://gameprogrammingpatterns.com/component.html"},{type:"🌐",name:"RogueBasin — Monster AI",url:"https://www.roguebasin.com/index.php?title=Intelligent_Monsters"}]},{subj:"qa",pom:2,title:"Security Testing Preview",topics:["OWASP Top 10 overview","Why security matters for AI code"],resources:[{type:"🌐",name:"OWASP Top 10",url:"https://owasp.org/www-project-top-ten/"}]},{subj:"eng",pom:2,title:"B2 — Reading & Writing",topics:["Read Hacker News articles","Write a short blog post"],resources:[{type:"🌐",name:"Hacker News",url:"https://news.ycombinator.com/"},{type:"🌐",name:"Dev.to",url:"https://dev.to/"}]}]},
+{week:14,theme:"OWASP Security & Cryptography",sat:[{subj:"qa",pom:5,title:"OWASP Top 10 — Attacks",topics:["Injection: SQL, NoSQL, command","Broken auth & sessions","XSS: stored, reflected, DOM","IDOR, CSRF","Security misconfiguration"],resources:[{type:"🌐",name:"OWASP Top 10 Guide",url:"https://owasp.org/www-project-top-ten/"},{type:"🎮",name:"PortSwigger Web Security Academy",url:"https://portswigger.net/web-security"},{type:"🎮",name:"OWASP Juice Shop",url:"https://owasp.org/www-project-juice-shop/"},{type:"🎬",name:"PwnFunction — XSS Explained",url:"https://www.youtube.com/watch?v=EoaDgUgS6QA"}]},{subj:"linux",pom:4,title:"Cryptography & PKI",topics:["Symmetric vs asymmetric (AES, RSA, Ed25519)","Hashing: SHA-256, bcrypt","GPG: encrypt/sign files","TLS handshake, certificate chains","PKI: CAs, CSRs, trust stores"],resources:[{type:"🌐",name:"Arch Wiki — GPG",url:"https://wiki.archlinux.org/title/GnuPG"},{type:"🎬",name:"Computerphile — Public Key Crypto",url:"https://www.youtube.com/watch?v=GSIDS_lvRv4"},{type:"🌐",name:"Let's Encrypt — How It Works",url:"https://letsencrypt.org/how-it-works/"},{type:"📘",name:"Serious Cryptography (Aumasson)",url:"https://www.amazon.com/Serious-Cryptography-Practical-Introduction-Encryption/dp/1593278268"}]},{subj:"eng",pom:3,title:"C1 — Advanced Grammar",topics:["Inversion: Not only... but also","Cleft sentences: What we need is...","Subtle modality: would tend to, might well"],resources:[{type:"📘",name:"Advanced Grammar in Use (Hewings)",url:"https://www.amazon.com/Advanced-Grammar-Self-Study-Reference-Practice/dp/1107699894"},{type:"🌐",name:"Cambridge C1 Advanced",url:"https://www.cambridgeenglish.org/exams-and-tests/advanced/"}]}],sun:[{subj:"qa",pom:5,title:"Security Testing Tools",topics:["Burp Suite: intercept & modify requests","OWASP ZAP: automated scanning","Nikto, Nmap basics","DevTools for security","SAST: SonarQube, Snyk"],resources:[{type:"🌐",name:"Burp Suite Community",url:"https://portswigger.net/burp/communitydownload"},{type:"🌐",name:"OWASP ZAP",url:"https://www.zaproxy.org/getting-started/"},{type:"🌐",name:"Nmap Guide",url:"https://nmap.org/book/man.html"},{type:"🌐",name:"Snyk",url:"https://snyk.io/"},{type:"🌐",name:"SonarQube",url:"https://www.sonarsource.com/products/sonarqube/"}]},{subj:"linux",pom:4,title:"Network Security & Pen Testing",topics:["nmap: port scanning, OS fingerprinting","Wireshark/tcpdump: packet capture","VPN & WireGuard","OWASP from server side"],resources:[{type:"🌐",name:"Wireshark User Guide",url:"https://www.wireshark.org/docs/wsug_html/"},{type:"🌐",name:"WireGuard Quickstart",url:"https://www.wireguard.com/quickstart/"},{type:"🎮",name:"TryHackMe",url:"https://tryhackme.com/"},{type:"🎮",name:"HackTheBox",url:"https://www.hackthebox.com/"}]},{subj:"godot",pom:2,title:"Abilities, Magic & Hunger",topics:["Spell system: targeting, cooldowns","Hunger clock mechanics"],resources:[{type:"🌐",name:"RogueBasin — Magic",url:"https://www.roguebasin.com/index.php?title=Magic"}]},{subj:"eng",pom:1,title:"C1 — Formal Register",topics:["Formal vs conversational tone"],resources:[{type:"🌐",name:"Purdue OWL",url:"https://owl.purdue.edu/owl/"}]}]},
+{week:15,theme:"API Security, Containers & Game Systems",sat:[{subj:"qa",pom:5,title:"API Security Testing",topics:["Authentication bypass","Rate limiting & brute force","Input validation & fuzzing","JWT vulnerabilities","BOLA: Broken Object Level Auth"],resources:[{type:"🌐",name:"OWASP API Security Top 10",url:"https://owasp.org/www-project-api-security/"},{type:"🌐",name:"JWT.io",url:"https://jwt.io/"},{type:"🎮",name:"PortSwigger — API Labs",url:"https://portswigger.net/web-security/api-testing"},{type:"🌐",name:"OWASP Fuzzing",url:"https://owasp.org/www-community/Fuzzing"}]},{subj:"linux",pom:4,title:"Kernel Features Behind Containers",topics:["Namespaces: PID, network, mount, user","Cgroups: CPU, memory, I/O limits","OverlayFS and image layers","Seccomp & capabilities"],resources:[{type:"🌐",name:"man namespaces(7)",url:"https://man7.org/linux/man-pages/man7/namespaces.7.html"},{type:"🌐",name:"man cgroups(7)",url:"https://man7.org/linux/man-pages/man7/cgroups.7.html"},{type:"🎬",name:"Liz Rice — Containers From Scratch",url:"https://www.youtube.com/watch?v=8fi7uSYlOdc"}]},{subj:"eng",pom:3,title:"C1 — Strategic Vocabulary",topics:["Leverage, paradigm shift, value proposition","Idioms: move the needle, deep dive","Nuanced: I'd argue that..."],resources:[{type:"📘",name:"English Idioms in Use Advanced",url:"https://www.amazon.com/English-Idioms-Advanced-Answers-Vocabulary/dp/0521744296"}]}],sun:[{subj:"qa",pom:4,title:"Security in AI-Generated Code",topics:["AI code vulnerabilities","Prompt injection attacks","Security anti-patterns in AI code","Supply chain: SBOM, dependencies","GDPR, SOC2, HIPAA awareness"],resources:[{type:"🌐",name:"OWASP LLM Top 10",url:"https://owasp.org/www-project-top-10-for-large-language-model-applications/"},{type:"🌐",name:"Snyk — AI Code Security",url:"https://snyk.io/reports/ai-code-security/"},{type:"🌐",name:"NTIA — SBOM Guide",url:"https://www.ntia.gov/page/software-bill-of-materials"},{type:"🌐",name:"GDPR.eu",url:"https://gdpr.eu/"}]},{subj:"linux",pom:4,title:"Docker & Podman Deep Dive",topics:["Docker vs Podman: rootless","Dockerfile best practices, multi-stage","Docker Compose orchestration","Networking, volumes, secrets"],resources:[{type:"🌐",name:"Docker Best Practices",url:"https://docs.docker.com/develop/develop-images/dockerfile_best-practices/"},{type:"🌐",name:"Podman Getting Started",url:"https://podman.io/get-started"},{type:"🎬",name:"NetworkChuck — Docker",url:"https://www.youtube.com/watch?v=eGz9DS-aIeY"}]},{subj:"godot",pom:3,title:"Shops, Economy & Cursed Items",topics:["Gold economy, price by rarity","Cursed items, Remove Curse","Hunger clock: food management"],resources:[{type:"📘",name:"Game Balance — Economy",url:"https://gamebalanceconcepts.wordpress.com/"}]},{subj:"eng",pom:1,title:"C1 — Public Speaking",topics:["Let me walk you through..."],resources:[{type:"🎬",name:"TED — Public Speaking Secrets",url:"https://www.youtube.com/watch?v=-FOCpMAww28"}]}]},
+{week:16,theme:"Performance Testing & Orchestration",sat:[{subj:"qa",pom:5,title:"Performance Testing",topics:["Load, stress, spike, soak testing","JMeter: test plans, thread groups","k6: JS-based perf testing","Bottleneck identification","Performance budgets, Lighthouse, CWV"],resources:[{type:"🌐",name:"k6 Docs",url:"https://k6.io/docs/"},{type:"🌐",name:"JMeter Manual",url:"https://jmeter.apache.org/usermanual/index.html"},{type:"🌐",name:"web.dev — Core Web Vitals",url:"https://web.dev/vitals/"}]},{subj:"linux",pom:4,title:"Virtualization & Orchestration",topics:["KVM, QEMU, libvirt","virt-manager, virsh","Kubernetes: pods, services, deployments","IaC: Terraform, Ansible awareness"],resources:[{type:"🌐",name:"Arch Wiki — KVM",url:"https://wiki.archlinux.org/title/KVM"},{type:"🌐",name:"Kubernetes Concepts",url:"https://kubernetes.io/docs/concepts/"},{type:"🎮",name:"Killercoda — K8s Labs",url:"https://killercoda.com/"},{type:"🎬",name:"Nana — Kubernetes Course",url:"https://www.youtube.com/watch?v=X48VuDVv0do"}]},{subj:"eng",pom:3,title:"C1 — Presentations & Writing",topics:["Deliver a technical presentation","Write an executive summary","Advanced punctuation"],resources:[{type:"🌐",name:"Purdue OWL — Punctuation",url:"https://owl.purdue.edu/owl/general_writing/punctuation/index.html"},{type:"📘",name:"Elements of Style (Strunk & White)",url:"https://www.amazon.com/Elements-Style-Fourth-William-Strunk/dp/020530902X"}]}],sun:[{subj:"qa",pom:4,title:"Accessibility & Chaos Engineering",topics:["WCAG 2.1, screen readers","axe-core, Lighthouse, Pa11y","Chaos engineering: failure injection","Observability: logs, metrics, traces"],resources:[{type:"🌐",name:"WCAG 2.1 Quick Reference",url:"https://www.w3.org/WAI/WCAG21/quickref/"},{type:"🌐",name:"axe DevTools",url:"https://www.deque.com/axe/devtools/"},{type:"📘",name:"Principles of Chaos",url:"https://principlesofchaos.org/"},{type:"🌐",name:"Gremlin — Chaos Guide",url:"https://www.gremlin.com/community/tutorials/"}]},{subj:"godot",pom:5,title:"Meta-Progression & Replayability",topics:["Permadeath and persistent unlocks","Achievements system","Character classes: warrior, mage, rogue","Difficulty modifiers, daily seeds","Death analytics"],resources:[{type:"🌐",name:"RogueBasin — Permadeath",url:"https://www.roguebasin.com/index.php?title=Permadeath"},{type:"🎬",name:"GMTK — Good Roguelikes",url:"https://www.youtube.com/watch?v=tLQJDiybMnE"}]},{subj:"eng",pom:2,title:"C1 — Conference Talk Prep",topics:["Structure a 10-min talk","Explain complex topics simply"],resources:[{type:"🎬",name:"PyCon Talks Archive",url:"https://www.youtube.com/@PyConUS"}]},{subj:"linux",pom:1,title:"Distro Landscape",topics:["Distro families overview"],resources:[{type:"🌐",name:"DistroWatch",url:"https://distrowatch.com/"}]}]},
+{week:17,theme:"Test Strategy, Game UI & Advanced Linux",sat:[{subj:"qa",pom:5,title:"Test Strategy & Architecture",topics:["Test strategies for large systems","Test pyramid: unit, integration, e2e","Risk-based testing","Microservices testing","Testing in production: canary, blue-green"],resources:[{type:"📘",name:"Martin Fowler — Test Pyramid",url:"https://martinfowler.com/articles/practical-test-pyramid.html"},{type:"📘",name:"Google Testing Blog",url:"https://testing.googleblog.com/"},{type:"📘",name:"Accelerate (Forsgren, Humble, Kim)",url:"https://www.amazon.com/Accelerate-Software-Performing-Technology-Organizations/dp/1942788339"}]},{subj:"godot",pom:4,title:"UI/UX Polish & Game Feel",topics:["Message log, tooltips, minimap","Death screen: stats, cause, summary","Tutorial through dungeon design"],resources:[{type:"🎬",name:"GMTK — UX in Games",url:"https://www.youtube.com/watch?v=sFIDCGYoVFo"},{type:"🌐",name:"Godot — RichTextLabel",url:"https://docs.godotengine.org/en/stable/tutorials/ui/bbcode_in_richtextlabel.html"}]},{subj:"eng",pom:3,title:"C1 — Mentoring & Feedback",topics:["Mentor junior devs","Cultural nuances in international teams","Handle interviews confidently"],resources:[{type:"📘",name:"The Culture Map (Erin Meyer)",url:"https://www.amazon.com/Culture-Map-Breaking-Invisible-Boundaries/dp/1610392507"}]}],sun:[{subj:"linux",pom:5,title:"Linux From Scratch & Source Builds",topics:["LFS: building from source","Compile the kernel: make menuconfig","Gentoo: USE flags, Portage, emerge","Understanding every OS component"],resources:[{type:"📘",name:"Linux From Scratch (free)",url:"https://www.linuxfromscratch.org/lfs/view/stable/"},{type:"🌐",name:"Gentoo Handbook",url:"https://wiki.gentoo.org/wiki/Handbook:Main_Page"},{type:"🌐",name:"Kernel.org — Compiling",url:"https://www.kernel.org/doc/html/latest/admin-guide/README.html"}]},{subj:"qa",pom:3,title:"AI-Augmented QA",topics:["AI test case generation","Self-healing tests, visual AI","Flaky test detection","Tools: Testim, Applitools, Mabl"],resources:[{type:"🌐",name:"Applitools",url:"https://applitools.com/"},{type:"🌐",name:"Testim",url:"https://www.testim.io/"},{type:"🌐",name:"Mabl",url:"https://www.mabl.com/"}]},{subj:"godot",pom:2,title:"Game Balancing",topics:["Balance spreadsheets","Playtesting & iteration"],resources:[{type:"📘",name:"Game Balance Concepts",url:"https://gamebalanceconcepts.wordpress.com/"}]},{subj:"eng",pom:2,title:"C1 — Technical Articles",topics:["Write a tech blog post","Read conference talks in English"],resources:[{type:"🌐",name:"Dev.to",url:"https://dev.to/"},{type:"🌐",name:"Hashnode",url:"https://hashnode.com/"}]}]},
+{week:18,theme:"Leadership, Export & Immutable Distros",sat:[{subj:"qa",pom:5,title:"QA Leadership & Culture",topics:["Mentoring junior QAs","Quality metrics: defect density, coverage","Present metrics to stakeholders","QA guild / community of practice","Certs: ISTQB, CSTE, AWS Security"],resources:[{type:"🌐",name:"ISTQB Certification",url:"https://www.istqb.org/certifications/certified-tester-foundation-level"},{type:"🌐",name:"Ministry of Testing",url:"https://www.ministryoftesting.com/"},{type:"📘",name:"Agile Testing (Crispin & Gregory)",url:"https://www.amazon.com/Agile-Testing-Practical-Guide-Testers/dp/0321534468"}]},{subj:"godot",pom:4,title:"Building, Exporting & Publishing",topics:["Export: Windows, macOS, Linux, Web","Optimization: strip debug, compress","itch.io: upload, page, screenshots","Devlog and marketing"],resources:[{type:"🌐",name:"Godot — Exporting",url:"https://docs.godotengine.org/en/stable/tutorials/export/index.html"},{type:"🌐",name:"itch.io Creator Guide",url:"https://itch.io/docs/creators/"}]},{subj:"eng",pom:3,title:"C1 — Professional Mastery",topics:["Write a whitepaper","Deliver a mock keynote","C1 self-assessment"],resources:[{type:"🌐",name:"Cambridge C1 Advanced",url:"https://www.cambridgeenglish.org/exams-and-tests/advanced/"},{type:"📘",name:"The Pragmatic Programmer",url:"https://www.amazon.com/Pragmatic-Programmer-journey-mastery-Anniversary/dp/0135957052"}]}],sun:[{subj:"linux",pom:5,title:"Immutable & Next-Gen Distros",topics:["NixOS: declarative configuration","Fedora Silverblue: ostree immutability","Flatpak, Snap, AppImage","Future: declarative, reproducible Linux"],resources:[{type:"🌐",name:"NixOS Manual",url:"https://nixos.org/manual/nixos/stable/"},{type:"🌐",name:"Fedora Silverblue",url:"https://docs.fedoraproject.org/en-US/fedora-silverblue/"},{type:"🌐",name:"Flatpak Setup",url:"https://flatpak.org/setup/"}]},{subj:"qa",pom:3,title:"Custom Test Frameworks",topics:["Design a framework from scratch","Plugin architecture","Custom reporters, CI hooks"],resources:[{type:"📘",name:"Pytest — Writing Plugins",url:"https://docs.pytest.org/en/stable/how-to/writing_plugins.html"}]},{subj:"godot",pom:2,title:"Roguelike Final Polish",topics:["Bug fixes, balance tweaks","2+ classes, 6+ enemy types"],resources:[{type:"🎮",name:"r/roguelikedev",url:"https://www.reddit.com/r/roguelikedev/"}]},{subj:"eng",pom:2,title:"C1 — Open Source English",topics:["Contribute to English-speaking OSS","Write PRs and reviews"],resources:[{type:"🌐",name:"Good First Issues",url:"https://goodfirstissues.com/"}]}]},
+{week:19,theme:"Integration: Everything Together",sat:[{subj:"qa",pom:4,title:"Full Stack QA: Security + Auto",topics:["Complete test strategy for AI app","Combine functional + security + perf","OWASP checks in CI/CD","AI code security checklist"],resources:[{type:"🌐",name:"OWASP DevSecOps Guide",url:"https://owasp.org/www-project-devsecops-guideline/"},{type:"🌐",name:"GitHub CodeQL",url:"https://docs.github.com/en/code-security/code-scanning"}]},{subj:"godot",pom:4,title:"Roguelike: Final Integration",topics:["Integrate all systems","Full playthrough testing","Performance profiling","Polish: particles, shake, audio"],resources:[{type:"🌐",name:"Godot Profiler",url:"https://docs.godotengine.org/en/stable/tutorials/debug/overview_of_debugging_tools.html"}]},{subj:"linux",pom:2,title:"Linux Security Lab",topics:["Hardened server: SSH, firewall, AIDE","Vulnerability scan"],resources:[{type:"🌐",name:"Lynis — Security Audit",url:"https://cisofy.com/lynis/"}]},{subj:"eng",pom:2,title:"Portfolio English",topics:["CV/portfolio in English","LinkedIn optimization"],resources:[{type:"🌐",name:"Harvard — Resume Tips",url:"https://hwpi.harvard.edu/files/ocs/files/hes-resume-cover-letter-guide.pdf"}]}],sun:[{subj:"prog",pom:4,title:"Programming Capstone",topics:["Python: CLI tool with I/O, API, OOP","JavaScript: Node.js testing utility","GDScript: review typed code, patterns","Git: clean repos, proper READMEs"],resources:[{type:"🌐",name:"Make a README",url:"https://www.makeareadme.com/"},{type:"🌐",name:"Choose a License",url:"https://choosealicense.com/"}]},{subj:"qa",pom:3,title:"Portfolio: QA Projects",topics:["Document framework on GitHub","Test plans for your game","QA portfolio: auto + security + strategy"],resources:[{type:"🌐",name:"GitHub Profile Guide",url:"https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile"}]},{subj:"linux",pom:3,title:"Linux Capstone Lab",topics:["Deploy app on hardened server","Containerize with Docker, CI/CD","Monitor with logging"],resources:[{type:"🌐",name:"DigitalOcean Tutorials",url:"https://www.digitalocean.com/community/tutorials"}]},{subj:"eng",pom:2,title:"Interview Prep",topics:["QA interview questions in English","Describe your roguelike project"],resources:[{type:"🌐",name:"Pramp",url:"https://www.pramp.com/"},{type:"🌐",name:"Glassdoor — QA Questions",url:"https://www.glassdoor.com/Interview/qa-engineer-interview-questions-SRCH_KO0,11.htm"}]}]},
+{week:20,theme:"Semester Final: Ship Everything",sat:[{subj:"godot",pom:5,title:"SHIP: Publish on itch.io",topics:["Final export: Windows + Web","Upload to itch.io","Write devlog","Share on communities","Celebrate!"],resources:[{type:"🌐",name:"itch.io Publishing",url:"https://itch.io/docs/creators/getting-started"},{type:"🌐",name:"r/roguelikedev",url:"https://www.reddit.com/r/roguelikedev/"}]},{subj:"qa",pom:4,title:"SHIP: QA Portfolio",topics:["GitHub: automation, security, API tests","README + architecture diagrams","Demo video of test suite","Update CV"],resources:[{type:"🌐",name:"Mermaid — Diagrams as Code",url:"https://mermaid.js.org/"},{type:"🌐",name:"Loom — Record Demos",url:"https://www.loom.com/"}]},{subj:"eng",pom:3,title:"SHIP: English Portfolio",topics:["Blog: 'My 20-Week Journey'","5-min video in English","Self-assess vs Week 1"],resources:[{type:"🌐",name:"Dev.to",url:"https://dev.to/"}]}],sun:[{subj:"linux",pom:4,title:"SHIP: Linux Mastery",topics:["Document Arch setup on GitHub","Linux Survival Guide for yourself","Break & fix lab","Plan: RHCSA, CKA, OSCP"],resources:[{type:"🌐",name:"RHCSA",url:"https://www.redhat.com/en/services/certification/rhcsa"},{type:"🌐",name:"CKA",url:"https://www.cncf.io/certification/cka/"},{type:"🌐",name:"OSCP",url:"https://www.offsec.com/courses/pen-200/"}]},{subj:"prog",pom:3,title:"SHIP: Clean All Repos",topics:["READMEs, .gitignore, structure","All projects documented","Reflect on 20-week growth"],resources:[{type:"🌐",name:"Awesome README",url:"https://github.com/matiassingers/awesome-readme"}]},{subj:"qa",pom:2,title:"Next Steps: Career",topics:["Paths: Staff QA, Manager, Security Eng","Certs: ISTQB → AWS → OSCP"],resources:[{type:"🌐",name:"ISTQB Path",url:"https://www.istqb.org/certifications/certified-tester-foundation-level"},{type:"🌐",name:"AWS Security Specialty",url:"https://aws.amazon.com/certification/certified-security-specialty/"}]},{subj:"eng",pom:2,title:"Next: Keep Growing",topics:["Cambridge C1 exam prep","Join English communities permanently"],resources:[{type:"🌐",name:"Cambridge C1",url:"https://www.cambridgeenglish.org/exams-and-tests/advanced/"}]},{subj:"linux",pom:1,title:"The Journey Continues",topics:["Contribute to kernel or AUR"],resources:[{type:"🌐",name:"Kernel Newbies",url:"https://kernelnewbies.org/FirstKernelPatch"}]}]}
+];
+
+const POM_PRESETS=[{label:"Classic",work:25,short:5,long:15},{label:"Deep Focus",work:50,short:10,long:20},{label:"Sprint",work:15,short:3,long:10}];
+
+// ══════════════════════════════════════════════════════════
+// STATE + LOCALSTORAGE
+// ══════════════════════════════════════════════════════════
+
+const LS_KEY = "semester_planner_v2";
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return { completed: {}, expandedRes: {}, pomCount: 0 };
+}
+function saveState() {
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify({ completed: state.completed, expandedRes: state.expandedRes, pomCount: state.pomCount }));
+  } catch(e) {}
+}
+function clearAll() {
+  if (confirm("Clear ALL progress? This cannot be undone.")) {
+    state.completed = {};
+    state.expandedRes = {};
+    state.pomCount = 0;
+    saveState();
+    render();
+  }
+}
+
+const saved = loadState();
+const state = {
+  view: "semester",
+  selectedWeek: null,
+  selectedDay: "sat",
+  completed: saved.completed || {},
+  expandedRes: saved.expandedRes || {},
+  subjectFilter: null,
+  pomPreset: 0,
+  pomMode: "work",
+  pomTime: POM_PRESETS[0].work * 60,
+  pomRunning: false,
+  pomCount: saved.pomCount || 0,
+  pomInterval: null,
+};
+
+function toggleTopic(w, d, bi, ti) {
+  const k = `${w}-${d}-${bi}-${ti}`;
+  state.completed[k] = !state.completed[k];
+  if (!state.completed[k]) delete state.completed[k];
+  saveState();
+  render();
+}
+
+function toggleRes(key) {
+  state.expandedRes[key] = !state.expandedRes[key];
+  if (!state.expandedRes[key]) delete state.expandedRes[key];
+  saveState();
+  render();
+}
+
+function getWeekProgress(wi) {
+  const w = WEEKS[wi]; let t=0, d=0;
+  ["sat","sun"].forEach(day => { (w[day]||[]).forEach((b,bi) => { b.topics.forEach((_,ti) => { t++; if(state.completed[`${wi}-${day}-${bi}-${ti}`]) d++; }); }); });
+  return t ? Math.round(d/t*100) : 0;
+}
+function getTotalProgress() {
+  let t=0,d=0;
+  WEEKS.forEach((w,wi)=>{["sat","sun"].forEach(day=>{(w[day]||[]).forEach((b,bi)=>{b.topics.forEach((_,ti)=>{t++;if(state.completed[`${wi}-${day}-${bi}-${ti}`])d++;});});});});
+  return t?Math.round(d/t*100):0;
+}
+function getCompletedCount() { return Object.keys(state.completed).length; }
+
+// ══════════════════════════════════════════════════════════
+// POMODORO
+// ══════════════════════════════════════════════════════════
+
+function pomFmt(s){return`${String(Math.floor(s/60)).padStart(2,"0")}:${String(s%60).padStart(2,"0")}`}
+const pomCol={work:"#DC2626",short:"#0F766E",long:"#7C3AED"};
+
+function pomStart() {
+  if (state.pomRunning) { state.pomRunning=false; clearInterval(state.pomInterval); render(); return; }
+  state.pomRunning=true;
+  state.pomInterval=setInterval(()=>{
+    state.pomTime--;
+    if(state.pomTime<=0){
+      clearInterval(state.pomInterval);
+      state.pomRunning=false;
+      if(state.pomMode==="work"){
+        state.pomCount++;
+        saveState();
+        state.pomMode=state.pomCount%4===0?"long":"short";
+        state.pomTime=(state.pomCount%4===0?POM_PRESETS[state.pomPreset].long:POM_PRESETS[state.pomPreset].short)*60;
+      } else {
+        state.pomMode="work";
+        state.pomTime=POM_PRESETS[state.pomPreset].work*60;
+      }
+      try{new Audio("data:audio/wav;base64,UklGRl9vT19teleVFTEAAAA=").play()}catch(e){}
+    }
+    render();
+  },1000);
+  render();
+}
+
+function pomReset(){clearInterval(state.pomInterval);state.pomRunning=false;state.pomMode="work";state.pomTime=POM_PRESETS[state.pomPreset].work*60;state.pomCount=0;saveState();render()}
+function pomSetPreset(i){clearInterval(state.pomInterval);state.pomRunning=false;state.pomPreset=i;state.pomMode="work";state.pomTime=POM_PRESETS[i].work*60;render()}
+
+// ══════════════════════════════════════════════════════════
+// RENDER
+// ══════════════════════════════════════════════════════════
+
+const $=id=>document.getElementById(id);
+const content=()=>$("content");
+
+function render() {
+  const tp = getTotalProgress();
+  $("totalPct").textContent = tp+"%";
+  $("totalBar").style.width = tp+"%";
+
+  document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.view === state.view));
+
+  if (state.view === "pomodoro") renderPomodoro();
+  else if (state.selectedWeek !== null) renderWeekDetail();
+  else renderSemester();
+}
+
+function renderPomodoro() {
+  const c = pomCol[state.pomMode];
+  const p = POM_PRESETS[state.pomPreset];
+  const modeLabel = state.pomMode==="work"?"Focus Time":state.pomMode==="short"?"Short Break":"Long Break";
+  content().innerHTML = `
+    <div class="pom-wrap">
+      <div class="pom-presets">${POM_PRESETS.map((pr,i)=>`<button class="pom-preset ${state.pomPreset===i?"active":""}" onclick="pomSetPreset(${i})">${pr.label}<small>${pr.work}/${pr.short}/${pr.long}m</small></button>`).join("")}</div>
+      <div class="pom-mode" style="color:${c}">${modeLabel}</div>
+      <div class="pom-circle ${state.pomRunning?"running":""}" style="color:${c};border-color:${c}">
+        <div>
+          <div class="pom-time">${pomFmt(state.pomTime)}</div>
+          <div class="pom-session">session ${state.pomCount+1}</div>
+        </div>
+      </div>
+      <div class="pom-actions">
+        <button class="pom-start" style="background:${state.pomRunning?"#ffffff0a":c}" onclick="pomStart()">${state.pomRunning?"Pause":"Start"}</button>
+        <button class="pom-reset" onclick="pomReset()">Reset</button>
+      </div>
+      <div class="pom-dots">${Array.from({length:Math.max(state.pomCount,4)},(_,i)=>`<div class="pom-dot ${i<state.pomCount?"filled":""}"></div>`).join("")}</div>
+    </div>`;
+}
+
+function renderSemester() {
+  const f = state.subjectFilter;
+  let html = `<div style="max-width:860px">`;
+  
+  // Storage banner
+  const cc = getCompletedCount();
+  if (cc > 0) {
+    html += `<div class="storage-banner"><span class="storage-text">💾 <strong>${cc} topics</strong> completed · Saved to browser</span><button class="clear-btn" onclick="clearAll()">Clear Progress</button></div>`;
+  }
+  
+  // Filters
+  html += `<div class="filters">${SUBJECTS.map(s=>`<button class="filter-btn ${f===s.key?"active":""}" style="--c:${s.bg};--ca:${s.accent}" onclick="state.subjectFilter=state.subjectFilter==='${s.key}'?null:'${s.key}';render()"><span style="font-size:12px">${s.icon}</span>${s.name}</button>`).join("")}</div>`;
+
+  // Week list
+  html += `<div class="week-list">`;
+  WEEKS.forEach((w,wi) => {
+    const prog = getWeekProgress(wi);
+    const allSubj = [...new Set([...w.sat,...w.sun].map(b=>b.subj))];
+    if (f && !allSubj.includes(f)) return;
+    const totalPom = [...w.sat,...w.sun].reduce((s,b)=>s+b.pom,0);
+    const resCount = [...w.sat,...w.sun].reduce((s,b)=>s+(b.resources?b.resources.length:0),0);
+    html += `<button class="week-card" onclick="state.selectedWeek=${wi};state.selectedDay='sat';render()">
+      <div class="wk-num ${prog===100?"done":""}">${prog===100?"✓":String(w.week).padStart(2,"0")}</div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <span class="wk-title">Week ${w.week}: ${w.theme}</span>
+          <span class="wk-meta">${totalPom} pom · ${resCount} links</span>
+        </div>
+        <div class="wk-tags">${allSubj.map(sk=>{const s=S(sk);return`<span class="wk-tag" style="background:${s.bg}22;color:${s.accent}">${s.icon} ${s.name}</span>`;}).join("")}</div>
+        <div style="margin-top:6px;display:flex;align-items:center;gap:6px">
+          <div class="wk-bar"><div class="wk-bar-fill" style="width:${prog}%;background:${prog===100?"#0F766E":"#C4B5FD"}"></div></div>
+          <span style="font-size:9px;color:#555;font-family:var(--mono);min-width:24px;text-align:right">${prog}%</span>
+        </div>
+      </div>
+    </button>`;
+  });
+  html += `</div></div>`;
+  content().innerHTML = html;
+}
+
+function renderWeekDetail() {
+  const wi = state.selectedWeek;
+  const w = WEEKS[wi];
+  const blocks = w[state.selectedDay] || [];
+  const totalPom = [...w.sat,...w.sun].reduce((s,b)=>s+b.pom,0);
+  const resCount = [...w.sat,...w.sun].reduce((s,b)=>s+(b.resources?b.resources.length:0),0);
+
+  let html = `<div class="detail">
+    <button class="back-btn" onclick="state.selectedWeek=null;render()">← All Weeks</button>
+    <div class="detail-title">Week ${w.week}: ${w.theme}</div>
+    <div class="detail-meta">${totalPom} pomodoros · ${resCount} learning resources</div>
+    <div class="day-toggle">
+      <button class="day-btn ${state.selectedDay==="sat"?"active":""}" onclick="state.selectedDay='sat';render()">Saturday</button>
+      <button class="day-btn ${state.selectedDay==="sun"?"active":""}" onclick="state.selectedDay='sun';render()">Sunday</button>
+    </div>
+    <div class="blocks">`;
+
+  blocks.forEach((block, bi) => {
+    const s = S(block.subj);
+    const blockDone = block.topics.every((_,ti)=>state.completed[`${wi}-${state.selectedDay}-${bi}-${ti}`]);
+    const resKey = `${wi}-${state.selectedDay}-${bi}`;
+    const resOpen = state.expandedRes[resKey];
+    const res = block.resources || [];
+
+    html += `<div class="block" style="border:1px solid ${s.bg}22">
+      <div class="block-hdr">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span class="block-icon">${s.icon}</span>
+          <div>
+            <div class="block-title">${block.title}</div>
+            <div class="block-subj" style="color:${s.accent}">${s.name} · ${block.pom} pom · ${res.length} sources</div>
+          </div>
+        </div>
+        ${blockDone?`<span class="block-done">DONE</span>`:""}
+      </div>
+      <div class="topics">`;
+
+    block.topics.forEach((topic, ti) => {
+      const k = `${wi}-${state.selectedDay}-${bi}-${ti}`;
+      const done = state.completed[k];
+      html += `<button class="topic-btn" onclick="toggleTopic(${wi},'${state.selectedDay}',${bi},${ti})">
+        <div class="chk ${done?"checked":""}" style="${done?`background:${s.bg}`:""}">${done?`<svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M2 5L4 7L8 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`:""}</div>
+        <span class="topic-text ${done?"checked":""}">${topic}</span>
+      </button>`;
+    });
+
+    html += `</div>`;
+
+    if (res.length > 0) {
+      html += `<button class="res-toggle" onclick="toggleRes('${resKey}')">
+        <span class="res-toggle-text">📚 ${res.length} Learning Resources</span>
+        <span class="res-arrow ${resOpen?"open":""}">▼</span>
+      </button>`;
+      if (resOpen) {
+        html += `<div class="res-list">`;
+        res.forEach(r => {
+          const domain = r.url.replace("https://","").replace("http://","").split("/").slice(0,2).join("/");
+          html += `<a class="res-link" href="${r.url}" target="_blank" rel="noopener noreferrer">
+            <span class="res-type">${r.type}</span>
+            <div style="min-width:0">
+              <div class="res-name">${r.name}</div>
+              <div class="res-url">${domain}</div>
+            </div>
+          </a>`;
+        });
+        html += `</div>`;
+      }
+    }
+    html += `</div>`;
+  });
+
+  html += `</div>
+    <div class="week-nav">
+      <button class="nav-btn" ${wi===0?"disabled":""} onclick="state.selectedWeek=${wi-1};state.selectedDay='sat';render()">← Week ${wi}</button>
+      <button class="nav-btn ${wi<19?"primary":""}" ${wi===19?"disabled":""} onclick="state.selectedWeek=${wi+1};state.selectedDay='sat';render()">Week ${wi+2} →</button>
+    </div>
+  </div>`;
+  content().innerHTML = html;
+}
+
+// ══════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════
+
+document.querySelectorAll(".tab").forEach(t => {
+  t.addEventListener("click", () => { state.view = t.dataset.view; if(t.dataset.view!=="semester") state.selectedWeek=null; render(); });
+});
+
+render();
+</script>
+</body>
+</html>
